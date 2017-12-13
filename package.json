@@ -1,0 +1,19 @@
+{
+  "name": "bench",
+  "version": "1.0.0",
+  "description": "compare js minifiers",
+  "main": "run.js",
+  "dependencies": {
+    "google-closure-compiler": "^20171203.0.0",
+    "uglify-js": "^3.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.58",
+    "typescript": "^2.6.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0"
+}
