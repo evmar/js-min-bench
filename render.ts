@@ -51,7 +51,7 @@ function main() {
 
                 best = result === bestGz ? ' class=best' : '';
                 html += `<td align=right${best}>${result.gzSize.toLocaleString()}</td>`;
-                html += `<td align=right${best}>${percent(result.size, baseline.size)}</td>`;
+                html += `<td align=right${best}>${percent(result.gzSize, baseline.gzSize)}</td>`;
             } else {
                 html += `<td colspan=4>failed</td>`;
             }
