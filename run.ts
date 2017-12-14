@@ -1,7 +1,8 @@
 import {promisify} from 'util';
 import * as fs from 'fs';
 import * as childProcess from 'child_process';
-import {Result, JSMetadata, ToolsMetadata} from './json';
+import {Result} from './json';
+import * as metadata from './metadata';
 
 const exec = promisify(childProcess.exec);
 
@@ -20,15 +21,12 @@ async function main() {
         if (e.code != 'EEXIST') throw e;
     }
 
-    let jsMetadata: JSMetadata = JSON.parse(fs.readFileSync('js/metadata.json', 'utf8'));
-    let inputs = Object.keys(jsMetadata);
+    let inputs = Object.keys(metadata.js);
     inputs.sort();
-
-    let tools: ToolsMetadata = JSON.parse(fs.readFileSync('tools.json', 'utf8'));
 
     let results: Result[] = [];
     for (const input of inputs) {
-        for (const {name:tool, command} of tools) {
+        for (const {name:tool, command} of metadata.tools) {
             console.log(`${input} ${tool}`);
             let out = `out/${tool}.${input}`;
             let cmd = command.replace('%%in%%', `js/${input}`)

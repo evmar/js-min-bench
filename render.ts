@@ -1,5 +1,6 @@
-import {Result, JSMetadata, ToolsMetadata} from './json';
 import * as fs from 'fs';
+import {Result} from './json';
+import * as metadata from './metadata';
 
 function rollup<T, K extends keyof T>(data: T[], key: K): Map<T[K], T[]> {
     let map = new Map<T[K], T[]>();
@@ -29,8 +30,6 @@ function percent(n: number, total: number): string {
 
 function main() {
     let allResults: Result[] = JSON.parse(fs.readFileSync('results.json', 'utf8'));
-    let jsMetadata = JSON.parse(fs.readFileSync('js/metadata.json', 'utf8'));
-    let tools = JSON.parse(fs.readFileSync('tools.json', 'utf8'));
 
     let html = '';
     for (let [input, results] of rollup(allResults, 'input').entries()) {
