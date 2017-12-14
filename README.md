@@ -2,6 +2,8 @@
 
 Benchmark comparing various JavaScript minifiers and options.
 
+This is not an officially supported Google product.
+
 TODO add more in README about what I'm trying to here.
 
 ## Run it yourself
