@@ -37,24 +37,29 @@ function main() {
         html += `<table>`;
         html += `<tr><th>tool</th><th>size</th><th></th><th>gzip</th><th></th><th>runtime</th></tr>`;
         let baseline = results[0];
-        let bestSize = minRow(results, 'size');
-        let bestGz = minRow(results, 'gzSize');
-        let bestTime = minRow(results.slice(1), 'time');
+        let candidates = results.slice(1).filter(r => !r.failed);
+        let bestSize = minRow(candidates, 'size');
+        let bestGz = minRow(candidates, 'gzSize');
+        let bestTime = minRow(candidates, 'time');
         for (let result of results) {
             html += `<tr><td>${result.tool}</td>`;
 
-            let best = result === bestSize ? ' class=best' : '';
-            html += `<td align=right${best}>${result.size.toLocaleString()}</td>`
-            html += `<td align=right${best}>${percent(result.size, baseline.size)}</td>`;
+            if (!result.failed) {
+                let best = result === bestSize ? ' class=best' : '';
+                html += `<td align=right${best}>${result.size.toLocaleString()}</td>`
+                html += `<td align=right${best}>${percent(result.size, baseline.size)}</td>`;
 
-            best = result === bestGz ? ' class=best' : '';
-            html += `<td align=right${best}>${result.gzSize.toLocaleString()}</td>`;
-            html += `<td align=right${best}>${percent(result.size, baseline.size)}</td>`;
+                best = result === bestGz ? ' class=best' : '';
+                html += `<td align=right${best}>${result.gzSize.toLocaleString()}</td>`;
+                html += `<td align=right${best}>${percent(result.size, baseline.size)}</td>`;
+            } else {
+                html += `<td colspan=4>failed</td>`;
+            }
 
             if (result === baseline) {
                 html += `<td></td>`;
             } else {
-                best = result === bestTime ? ' class=best' : '';
+                let best = result === bestTime ? ' class=best' : '';
                 let time = (result.time / 1000).toFixed(1);
                 html += `<td align=right${best}>${time}</td></tr>`;
             }

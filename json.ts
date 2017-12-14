@@ -4,4 +4,5 @@ export interface Result {
     time: number;
     size: number;
     gzSize: number;
+    failed?: boolean;
 }

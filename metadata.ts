@@ -44,4 +44,9 @@ export const tools: ToolMetadata[] = [
     desc: "Google Closure Compiler 20171203 with no flags",
     command: "java -jar node_modules/google-closure-compiler/compiler.jar --js_output_file=%%out%% %%in%%",
 },
+    {
+    name: "closure-advanced",
+    desc: "Google Closure Compiler 20171203, advanced mode + externs",
+    command: "java -jar node_modules/google-closure-compiler/compiler.jar -O advanced js/externs.js --js_output_file=%%out%% %%in%%",
+},
 ];

@@ -32,7 +32,20 @@ async function main() {
             let cmd = command.replace('%%in%%', `js/${input}`)
                 .replace('%%out%%', out);
             let start = Date.now();
-            await exec(cmd);
+            try {
+                await exec(cmd);
+            } catch (e) {
+                let end = Date.now();
+                results.push({
+                    input,
+                    tool,
+                    time: end - start,
+                    size: 0,
+                    gzSize: 0,
+                    failed: true,
+                });
+                continue;
+            }
             let end = Date.now();
             let size = fs.statSync(out).size;
             await gzip(out);
