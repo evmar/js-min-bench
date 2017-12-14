@@ -26,10 +26,11 @@ async function main() {
 
     let results: Result[] = [];
     for (const input of inputs) {
+        const inputPath = metadata.js[input].path;
         for (const {name:tool, command} of metadata.tools) {
             console.log(`${input} ${tool}`);
             let out = `out/${tool}.${input}`;
-            let cmd = command.replace('%%in%%', `js/${input}`)
+            let cmd = command.replace('%%in%%', inputPath)
                 .replace('%%out%%', out);
             let start = Date.now();
             try {
