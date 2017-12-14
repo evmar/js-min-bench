@@ -1,0 +1,14 @@
+{
+  "angular.js": {
+    "version": "1.6.6",
+    "origin": "https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"
+  },
+  "react-dom.js": {
+    "version": "16.2.0",
+    "origin": "https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+  },
+  "vue.js": {
+    "version": "2.5.3",
+    "origin": "https://cdn.jsdelivr.net/npm/vue"
+  }
+}

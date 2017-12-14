@@ -1,16 +1,9 @@
 import {promisify} from 'util';
 import * as fs from 'fs';
 import * as childProcess from 'child_process';
-import {Result} from './result';
+import {Result, JSMetadata} from './json';
 
-const stat = promisify(fs.stat);
 const exec = promisify(childProcess.exec);
-
-const inputs = [
-    'angular.js',
-    'react-dom.js',
-    'vue.js',
-];
 
 interface Tool {
     name: string,
@@ -51,10 +44,14 @@ async function summarize(results: Result[]) {
 
 async function main() {
     try {
-        await promisify(fs.mkdir)('out');
+        fs.mkdirSync('out');
     } catch (e) {
         if (e.code != 'EEXIST') throw e;
     }
+
+    let jsMetadata = JSON.parse(fs.readFileSync('js/metadata.json', 'utf8'));
+    let inputs = Object.keys(jsMetadata);
+    inputs.sort();
 
     let results: Result[] = [];
     for (const input of inputs) {
@@ -64,9 +61,9 @@ async function main() {
             let start = Date.now();
             await run(`js/${input}`, out);
             let end = Date.now();
-            let size = (await stat(out)).size;
+            let size = fs.statSync(out).size;
             await gzip(out);
-            let gzSize = (await stat(`${out}.gz`)).size;
+            let gzSize = fs.statSync(`${out}.gz`).size;
 
             results.push({
                 input,

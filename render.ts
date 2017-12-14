@@ -1,4 +1,4 @@
-import {Result} from './result';
+import {Result} from './json';
 import * as fs from 'fs';
 
 function rollup<T, K extends keyof T>(data: T[], key: K): Map<T[K], T[]> {
