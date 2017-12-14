@@ -7,8 +7,9 @@ const stat = promisify(fs.stat);
 const exec = promisify(childProcess.exec);
 
 const inputs = [
-    'vue.js',
+    'angular.js',
     'react-dom.js',
+    'vue.js',
 ];
 
 interface Tool {
