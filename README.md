@@ -2,8 +2,22 @@
 
 Benchmark comparing various JavaScript minifiers and options.
 
-## Setup
+TODO add more in README about what I'm trying to here.
+
+## Run it yourself
+
+### Setup
 
 ```sh
-$ npm i uglify-js google-closure-compiler-js
+$ yarn
+$ tsc
+```
+
+### Run
+
+```sh
+# Run the benchmark, write results.json:
+$ node ./run.js
+# Render results.json into HTML:
+$ node ./render.js > results.html
 ```
