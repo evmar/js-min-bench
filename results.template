@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <title>js-min-bench minifier comparison</title>
+    <style>
+     body {
+       font-family: sans-serif;
+       max-width: 80ex;
+       margin: auto;
+     }
+     h1 {
+       font-weight: normal;
+     }
+     tt {
+       font-family: monospace, WebKitWorkaround;
+     }
+     table {
+       border-spacing: 0;
+     }
+     td, th {
+       padding: 0.5ex 1ex;
+     }
+     .best {
+       background: #dfd;
+     }
+    </style>
+  </head>
+<body>
+  <h1>js-min-bench minifier comparison</h1>
+  %%content%%
+</body>
+</html>

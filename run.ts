@@ -1,6 +1,7 @@
 import {promisify} from 'util';
 import * as fs from 'fs';
 import * as childProcess from 'child_process';
+import {Result} from './result';
 
 const stat = promisify(fs.stat);
 const exec = promisify(childProcess.exec);
@@ -22,14 +23,6 @@ const tools: Tool[] = [
     {name:'closure', run: (inp, out) => closure("", inp, out)},
     // {name:'dec', run: (inp, out) => dec(inp, out)},
 ];
-
-interface Result {
-    input: string;
-    tool: string;
-    time: number;
-    size: number;
-    gzSize: number;
-}
 
 async function raw(inpath: string, outpath: string) {
     await exec(`cp ${inpath} ${outpath}`);
