@@ -10,6 +10,10 @@ async function gzip(path: string) {
     await exec(`gzip -k -9 -f ${path}`);
 }
 
+async function brotli(path: string) {
+    await exec(`./brotli -k -9 -f ${path}`);
+}
+
 async function summarize(results: Result[]) {
     await promisify(fs.writeFile)('results.json', JSON.stringify(results));
 }
@@ -43,6 +47,7 @@ async function main() {
                     time: end - start,
                     size: 0,
                     gzSize: 0,
+                    brSize: 0,
                     failed: true,
                 });
                 continue;
@@ -51,6 +56,8 @@ async function main() {
             let size = fs.statSync(out).size;
             await gzip(out);
             let gzSize = fs.statSync(`${out}.gz`).size;
+            await brotli(out);
+            let brSize = fs.statSync(`${out}.br`).size;
 
             results.push({
                 input,
@@ -58,6 +65,7 @@ async function main() {
                 time: end - start,
                 size,
                 gzSize,
+                brSize,
             });
         }
     }

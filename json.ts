@@ -4,5 +4,6 @@ export interface Result {
     time: number;
     size: number;
     gzSize: number;
+    brSize: number;
     failed?: boolean;
 }

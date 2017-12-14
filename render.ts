@@ -35,11 +35,12 @@ function main() {
     for (let [input, results] of rollup(allResults, 'input').entries()) {
         html += `<p><tt>${input}</tt>`;
         html += `<table>`;
-        html += `<tr><th>tool</th><th>size</th><th></th><th>gzip</th><th></th><th>runtime</th></tr>`;
+        html += `<tr><th>tool</th><th>size</th><th></th><th>gzip</th><th></th><th>brotli</th><th></th><th>runtime</th></tr>`;
         let baseline = results[0];
         let candidates = results.slice(1).filter(r => !r.failed);
         let bestSize = minRow(candidates, 'size');
         let bestGz = minRow(candidates, 'gzSize');
+        let bestBr = minRow(candidates, 'brSize');
         let bestTime = minRow(candidates, 'time');
         for (let result of results) {
             html += `<tr><td>${result.tool}</td>`;
@@ -52,8 +53,12 @@ function main() {
                 best = result === bestGz ? ' class=best' : '';
                 html += `<td align=right${best}>${result.gzSize.toLocaleString()}</td>`;
                 html += `<td align=right${best}>${percent(result.gzSize, baseline.gzSize)}</td>`;
+
+                best = result === bestBr ? ' class=best' : '';
+                html += `<td align=right${best}>${result.brSize.toLocaleString()}</td>`;
+                html += `<td align=right${best}>${percent(result.brSize, baseline.brSize)}</td>`;
             } else {
-                html += `<td colspan=4>failed</td>`;
+                html += `<td colspan=6>failed</td>`;
             }
 
             if (result === baseline) {
