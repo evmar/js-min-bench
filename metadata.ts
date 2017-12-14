@@ -19,6 +19,11 @@ export const js: {[name: string]: JSFileMetadata} = {
         version: "2.5.3",
         origin: "https://cdn.jsdelivr.net/npm/vue",
     },
+    "fake-10mb-angular": {
+        path: "third_party/angularjs/fake-10mb-angular.js",
+        version: "1.6.6",
+        origin: "https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js",
+    },
 };
 
 export interface ToolMetadata {
