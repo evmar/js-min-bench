@@ -15,8 +15,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "tsc -w",
     "build": "tsc",
-    "render": "node build/render.js > out/results.html",
-    "bench": "node build/run.js && node build/render.js > out/results.html"
+    "render": "node build/render.js > results.html",
+    "bench": "node build/run.js && node build/render.js > results.html"
   },
   "author": "",
   "license": "Apache-2.0"
