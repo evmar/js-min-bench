@@ -8,7 +8,7 @@
        max-width: 100ex;
        margin: auto;
      }
-     h1 {
+     h1, h2 {
        font-weight: normal;
      }
      tt {
@@ -19,6 +19,9 @@
      }
      td, th {
        padding: 0.5ex 1ex;
+     }
+     dd {
+       margin-bottom: 1ex;
      }
      .best {
        background: #dfd;

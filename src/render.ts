@@ -90,6 +90,34 @@ function main() {
         html += `</p>`;
     }
 
+    html += '<h2>input details</h2>';
+    html += '<dl>';
+    const inputs = Object.keys(metadata.js);
+    inputs.sort();
+    for (const name of inputs) {
+        html += `<dt>${name}</dt>` +
+            `<dd>${metadata.js[name].desc}</dd>`;
+    }
+    html += '</dl>';
+
+    html += '<h2>tool details</h2>';
+    html += '<dl>';
+    for (const tool of metadata.tools.slice(1)) {
+        html += `<dt>${tool.name}</dt>` +
+            `<dd>${tool.desc}<br>` +
+            `<tt>$ ${tool.command}</tt></dd>`;
+    }
+    html += '</dl>';
+
+    html += '<h2>output details</h2>';
+    html += '<dl>';
+    html += `<dt>gzip</dt><dd>gzip -9, supported by ~all browsers</dd>`;
+    html += `<dt><a name='brotli'>brotli</dt>` +
+        `<dd><a href='https://github.com/google/brotli'>brotli</a> -9, ` +
+        `supported by <a href='https://caniuse.com/#feat=brotli'>many</a> browsers` +
+        `</dd>`;
+    html += '</dl>';
+
     let template = fs.readFileSync('src/results.template', 'utf8');
     console.log(template.replace(/%%content%%/, html));
 }

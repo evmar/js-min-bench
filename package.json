@@ -15,6 +15,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "tsc -w",
     "build": "tsc",
+    "render": "node build/render.js > out/results.html",
     "bench": "node build/run.js && node build/render.js > out/results.html"
   },
   "author": "",
