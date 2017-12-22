@@ -41,7 +41,8 @@ function minRow<T, K extends keyof T>(data: T[], key: K): T {
 }
 
 function percent(n: number, total: number): string {
-    return (n * 100 / total).toFixed(0) + '%';
+    const p = n * 100 / total;
+    return p.toFixed(p < 10 ? 1 : 0) + '%';
 }
 
 function main() {
@@ -52,7 +53,7 @@ function main() {
         html += `<p><tt>${input}</tt>`;
         html += `<table>`;
         html += `<tr><th>tool</th><th>size</th><th></th><th>gzip</th><th></th><th>brotli</th><th></th><th>runtime</th></tr>`;
-        let baseline = results[0];
+        let baseline = results[0].size;
         let candidates = results.slice(1).filter(r => !r.failed);
         let bestSize = minRow(candidates, 'size');
         let bestGz = minRow(candidates, 'gzSize');
@@ -64,20 +65,20 @@ function main() {
             if (!result.failed) {
                 let best = result === bestSize ? ' class=best' : '';
                 html += `<td align=right${best}>${result.size.toLocaleString()}</td>`
-                html += `<td align=right${best}>${percent(result.size, baseline.size)}</td>`;
+                html += `<td align=right${best}>${percent(result.size, baseline)}</td>`;
 
                 best = result === bestGz ? ' class=best' : '';
                 html += `<td align=right${best}>${result.gzSize.toLocaleString()}</td>`;
-                html += `<td align=right${best}>${percent(result.gzSize, baseline.gzSize)}</td>`;
+                html += `<td align=right${best}>${percent(result.gzSize, baseline)}</td>`;
 
                 best = result === bestBr ? ' class=best' : '';
                 html += `<td align=right${best}>${result.brSize.toLocaleString()}</td>`;
-                html += `<td align=right${best}>${percent(result.brSize, baseline.brSize)}</td>`;
+                html += `<td align=right${best}>${percent(result.brSize, baseline)}</td>`;
             } else {
                 html += `<td colspan=6>failed</td>`;
             }
 
-            if (result === baseline) {
+            if (result === results[0]) {
                 html += `<td></td>`;
             } else {
                 let best = result === bestTime ? ' class=best' : '';
