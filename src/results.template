@@ -5,7 +5,7 @@
     <style>
      body {
        font-family: sans-serif;
-       max-width: 80ex;
+       max-width: 100ex;
        margin: auto;
      }
      h1 {
