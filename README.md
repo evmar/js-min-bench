@@ -11,15 +11,15 @@ TODO add more in README about what I'm trying to here.
 ### Setup
 
 ```sh
+# Install dependencies:
 $ yarn
-$ tsc
+# Build code:
+$ yarn run build
 ```
 
 ### Run
 
 ```sh
-# Run the benchmark, write results.json:
-$ node ./run.js
-# Render results.json into HTML:
-$ node ./render.js > results.html
+# Run benchmark, write out/results.html:
+$ yarn run bench
 ```

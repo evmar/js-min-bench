@@ -31,7 +31,7 @@ async function brotli(path: string) {
 }
 
 async function summarize(results: Result[]) {
-    await promisify(fs.writeFile)('results.json', JSON.stringify(results));
+    await promisify(fs.writeFile)('out/results.json', JSON.stringify(results));
 }
 
 async function main() {

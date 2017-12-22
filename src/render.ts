@@ -45,7 +45,7 @@ function percent(n: number, total: number): string {
 }
 
 function main() {
-    let allResults: Result[] = JSON.parse(fs.readFileSync('results.json', 'utf8'));
+    let allResults: Result[] = JSON.parse(fs.readFileSync('out/results.json', 'utf8'));
 
     let html = '';
     for (let [input, results] of rollup(allResults, 'input').entries()) {
@@ -89,7 +89,7 @@ function main() {
         html += `</p>`;
     }
 
-    let template = fs.readFileSync('results.template', 'utf8');
+    let template = fs.readFileSync('src/results.template', 'utf8');
     console.log(template.replace(/%%content%%/, html));
 }
 
