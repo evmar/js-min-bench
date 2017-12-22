@@ -30,6 +30,10 @@
   </head>
 <body>
   <h1>js-min-bench minifier comparison</h1>
+  <p>What is this?
+    <a href='https://github.com/evmar/js-min-bench#readme'>See the README</a>.
+  </p>
+
   %%content%%
 </body>
 </html>

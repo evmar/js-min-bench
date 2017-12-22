@@ -20,6 +20,6 @@ $ yarn run build
 ### Run
 
 ```sh
-# Run benchmark, write out/results.html:
+# Run benchmark, write index.html:
 $ yarn run bench
 ```
