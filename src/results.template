@@ -30,10 +30,17 @@
   </head>
 <body>
   <h1>js-min-bench minifier comparison</h1>
-  <p>What is this?
-    <a href='https://github.com/evmar/js-min-bench#readme'>See the README</a>.
+  <p>
+    This page compares JavaScript minifiers across various settings
+    and for various inputs.
+  </p>
+  <p>
+    <a href='https://github.com/evmar/js-min-bench#readme'>See the README</a>
+    for more background on the methodology. Scroll past the results to see
+    more details about what these numbers are.
   </p>
 
+  <h2>test results</h2>
   %%content%%
 </body>
 </html>

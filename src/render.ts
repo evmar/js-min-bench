@@ -52,7 +52,7 @@ function main() {
     for (let [input, results] of rollup(allResults, 'input').entries()) {
         html += `<p><tt>${input}</tt>`;
         html += `<table>`;
-        html += `<tr><th>tool</th><th>size</th><th></th><th>gzip</th><th></th><th>brotli</th><th></th><th>runtime</th></tr>`;
+        html += `<tr><th>tool</th><th>size</th><th></th><th>gzip</th><th></th><th>brotli</th><th></th><th>runtime</th></tr>\n`;
         let baseline = results[0].size;
         let candidates = results.slice(1).filter(r => !r.failed);
         let bestSize = minRow(candidates, 'size');
@@ -83,11 +83,11 @@ function main() {
             } else {
                 let best = result === bestTime ? ' class=best' : '';
                 let time = (result.time / 1000).toFixed(1);
-                html += `<td align=right${best}>${time}</td></tr>`;
+                html += `<td align=right${best}>${time}</td></tr>\n`;
             }
         }
         html += `</table>`;
-        html += `</p>`;
+        html += `</p>\n`;
     }
 
     html += '<h2>input details</h2>';
@@ -98,7 +98,7 @@ function main() {
         html += `<dt>${name}</dt>` +
             `<dd>${metadata.js[name].desc}</dd>`;
     }
-    html += '</dl>';
+    html += '</dl>\n';
 
     html += '<h2>tool details</h2>';
     html += '<dl>';
@@ -107,16 +107,19 @@ function main() {
             `<dd>${tool.desc}<br>` +
             `<tt>$ ${tool.command}</tt></dd>`;
     }
-    html += '</dl>';
+    html += '</dl>\n';
 
     html += '<h2>output details</h2>';
     html += '<dl>';
-    html += `<dt>gzip</dt><dd>gzip -9, supported by ~all browsers</dd>`;
+    html += `<dt>gzip</dt><dd>gzip -9 size in bytes, ` +
+        `supported by ~all browsers</dd>`;
     html += `<dt><a name='brotli'>brotli</dt>` +
-        `<dd><a href='https://github.com/google/brotli'>brotli</a> -9, ` +
+        `<dd><a href='https://github.com/google/brotli'>brotli</a> -9 size in bytes, ` +
         `supported by <a href='https://caniuse.com/#feat=brotli'>many</a> browsers` +
         `</dd>`;
-    html += '</dl>';
+    html += `<dt>runtime</dt>` +
+        `<dd>time taken to generate output, in seconds</dd>`;
+    html += '</dl>\n';
 
     let template = fs.readFileSync('src/results.template', 'utf8');
     console.log(template.replace(/%%content%%/, html));

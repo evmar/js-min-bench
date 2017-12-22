@@ -1,12 +1,18 @@
-# bench
+# js-min-bench
 
-Benchmark comparing various JavaScript minifiers and options.
+This project attempts to create a repeatable benchmark comparing various
+JavaScript minifiers and options.
 
-This is not an officially supported Google product.
+[View the current results](https://evmar.github.io/js-min-bench/).
 
-TODO add more in README about what I'm trying to here.
+Note: This is not an officially supported Google product.
 
 ## Run it yourself
+
+### Dependencies
+
+You need nodejs (to run the benchmarker and uglify) and Java (to run the Closure
+compiler).
 
 ### Setup
 
