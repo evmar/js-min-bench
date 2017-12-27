@@ -45,13 +45,8 @@ function percent(n: number, total: number): string {
   return p.toFixed(p < 10 ? 1 : 0) + "%";
 }
 
-function main() {
-  let allResults: Result[] = JSON.parse(
-    fs.readFileSync("out/results.json", "utf8")
-  );
-
-  let html = "";
-  html += `<table>`;
+function resultsTable(allResults: Result[]): string {
+  let html = `<table>`;
   html += `<tr><th>input</th><th>tool</th><th>size</th><th></th><th>gzip</th><th></th><th>brotli</th><th></th><th>runtime</th></tr>\n`;
   for (let [input, results] of rollup(allResults, "input").entries()) {
     html += `<tr><td>${input}</td></tr>`;
@@ -96,18 +91,22 @@ function main() {
     }
   }
   html += `</table>\n`;
+  return html;
+}
 
-  html += "<h2>input details</h2>";
-  html += "<dl>";
+function inputDetails(): string {
+  let html = "<dl>";
   const inputs = Object.keys(metadata.js);
   inputs.sort();
   for (const name of inputs) {
     html += `<dt>${name}</dt>` + `<dd>${metadata.js[name].desc}</dd>`;
   }
   html += "</dl>\n";
+  return html;
+}
 
-  html += "<h2>tool details</h2>";
-  html += "<dl>";
+function toolDetails(): string {
+  let html = "<dl>";
   html += `<dt>raw</dt>` + `<dd>raw input file, as baseline for comparison</dd>`;
   for (const tool of metadata.tools.slice(1)) {
     html +=
@@ -116,9 +115,21 @@ function main() {
       `<tt>$ ${tool.command}</tt></dd>`;
   }
   html += "</dl>\n";
+  return html;
+}
 
-  let template = fs.readFileSync("src/results.template", "utf8");
-  console.log(template.replace(/%%content%%/, html));
+function main() {
+  const allResults: Result[] = JSON.parse(
+    fs.readFileSync("out/results.json", "utf8")
+  );
+
+  const template = fs.readFileSync("src/results.template", "utf8");
+  const templateData: {[k: string]: string} = {
+    resultsTable: resultsTable(allResults),
+    inputDetails: inputDetails(),
+    toolDetails: toolDetails(),
+  };
+  console.log(template.replace(/%%(\w+)%%/g, (_, f) => templateData[f]));
 }
 
 main();

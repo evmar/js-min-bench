@@ -41,7 +41,13 @@
   </p>
 
   <h2>test results</h2>
-  %%content%%
+  %%resultsTable%%
+
+  <h2>input details</h2>
+  %%inputDetails%%
+
+  <h2>tool details</h2>
+  %%toolDetails%%
 
   <h2>output details</h2>
   <dl>
