@@ -19,6 +19,7 @@ import * as fs from 'fs';
 import * as childProcess from 'child_process';
 import {Result} from './json';
 import * as metadata from './metadata';
+import * as commander from 'commander';
 
 const exec = promisify(childProcess.exec);
 
@@ -49,6 +50,11 @@ async function gen10xAngular(path: string): Promise<string> {
 }
 
 async function main() {
+    commander
+        .option('--tools [list]', 'tools to run [default=all]', (arg) => arg.split(/,/))
+        .parse(process.argv);
+    const tools: string[]|undefined = commander.tools;
+
     try {
         fs.mkdirSync('out');
     } catch (e) {
@@ -70,6 +76,7 @@ async function main() {
             }
         }
         for (const {name:tool, command} of metadata.tools) {
+            if (tools && tools.indexOf(tool) < 0) continue;
             console.log(`${input} ${tool}`);
             let out = `out/${tool}.${input}`;
             let cmd = command.replace('%%in%%', inputPath)
