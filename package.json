@@ -10,10 +10,12 @@
   },
   "devDependencies": {
     "@types/node": "^8.0.58",
+    "prettier": "1.9.2",
     "typescript": "^2.6.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "fmt": "prettier --write src/*.ts",
     "watch": "tsc -w",
     "build": "tsc",
     "render": "node build/render.js > index.html",
