@@ -36,11 +36,13 @@ export const js: { [name: string]: JSFileMetadata } = {
       "angularjs 1.6.6 minified, artificially repeated until input file >10mb",
     version: "1.6.6"
   },
+  "react": {
+    path: "third_party/react/react.production.min.js",
+    desc: "react production bundle (without minification)",
+  },
   "react-dom": {
-    path: "third_party/react/react-dom.js",
-    desc: "react-dom 16.2.0 development bundle",
-    version: "16.2.0",
-    origin: "https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    path: "third_party/react/react-dom.production.min.js",
+    desc: "react-dom production bundle (without minification)",
   },
   vue: {
     path: "third_party/vue/vue.js",

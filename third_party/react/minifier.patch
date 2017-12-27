@@ -1,0 +1,13 @@
+diff --git a/scripts/rollup/build.js b/scripts/rollup/build.js
+index 1b3c0d3..5edc5bd 100644
+--- a/scripts/rollup/build.js
++++ b/scripts/rollup/build.js
+@@ -234,7 +234,7 @@ function getPlugins(
+       },
+     },
+     // Apply dead code elimination and/or minification.
+-    isProduction &&
++    isProduction && false &&
+       closure(
+         Object.assign({}, closureOptions, {
+           // Don't let it create global variables in the browser.
