@@ -51,10 +51,10 @@ function main() {
   );
 
   let html = "";
+  html += `<table>`;
+  html += `<tr><th>input</th><th>tool</th><th>size</th><th></th><th>gzip</th><th></th><th>brotli</th><th></th><th>runtime</th></tr>\n`;
   for (let [input, results] of rollup(allResults, "input").entries()) {
-    html += `<p><tt>${input}</tt>`;
-    html += `<table>`;
-    html += `<tr><th>tool</th><th>size</th><th></th><th>gzip</th><th></th><th>brotli</th><th></th><th>runtime</th></tr>\n`;
+    html += `<tr><td>${input}</td></tr>`;
     let baseline = results[0].size;
     let candidates = results.slice(1).filter(r => !r.failed);
     let bestSize = minRow(candidates, "size");
@@ -62,7 +62,7 @@ function main() {
     let bestBr = minRow(candidates, "brSize");
     let bestTime = minRow(candidates, "time");
     for (let result of results) {
-      html += `<tr><td>${result.tool}</td>`;
+      html += `<tr><td></td><td>${result.tool}</td>`;
 
       if (!result.failed) {
         let best = result === bestSize ? " class=best" : "";
@@ -94,9 +94,8 @@ function main() {
         html += `<td align=right${best}>${time}</td></tr>\n`;
       }
     }
-    html += `</table>`;
-    html += `</p>\n`;
   }
+  html += `</table>\n`;
 
   html += "<h2>input details</h2>";
   html += "<dl>";
@@ -109,6 +108,7 @@ function main() {
 
   html += "<h2>tool details</h2>";
   html += "<dl>";
+  html += `<dt>raw</dt>` + `<dd>raw input file, as baseline for comparison</dd>`;
   for (const tool of metadata.tools.slice(1)) {
     html +=
       `<dt>${tool.name}</dt>` +
