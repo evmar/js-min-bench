@@ -83,5 +83,10 @@ export const tools: ToolMetadata[] = [
     desc: "Google Closure Compiler 20171203, advanced mode + externs",
     command:
       "java -jar node_modules/google-closure-compiler/compiler.jar -O advanced third_party/externs.js --js_output_file=%%out%% %%in%%"
+  },
+  {
+    name: "j8t",
+    desc: "j8t work in progress",
+    command: "../j8t/target/release/js %%in%% > %%out%%",
   }
 ];

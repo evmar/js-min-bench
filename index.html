@@ -41,34 +41,52 @@
   </p>
 
   <h2>test results</h2>
-  <p><tt>angularjs</tt><table><tr><th>tool</th><th>size</th><th></th><th>gzip</th><th></th><th>brotli</th><th></th><th>runtime</th></tr>
-<tr><td>raw</td><td align=right>1,270,821</td><td align=right>100%</td><td align=right>309,875</td><td align=right>24%</td><td align=right>266,045</td><td align=right>21%</td><td></td><tr><td>uglify</td><td align=right>323,820</td><td align=right>25%</td><td align=right>83,243</td><td align=right>6.6%</td><td align=right>77,367</td><td align=right>6.1%</td><td align=right class=best>0.6</td></tr>
-<tr><td>uglify-compress-mangle</td><td align=right>175,751</td><td align=right>14%</td><td align=right>60,823</td><td align=right>4.8%</td><td align=right>57,219</td><td align=right>4.5%</td><td align=right>2.4</td></tr>
-<tr><td>closure</td><td align=right>178,463</td><td align=right>14%</td><td align=right>62,581</td><td align=right>4.9%</td><td align=right>58,973</td><td align=right>4.6%</td><td align=right>6.9</td></tr>
-<tr><td>closure-advanced</td><td align=right class=best>147,709</td><td align=right class=best>12%</td><td align=right class=best>57,295</td><td align=right class=best>4.5%</td><td align=right class=best>54,390</td><td align=right class=best>4.3%</td><td align=right>11.3</td></tr>
-</table></p>
-<p><tt>fake-10mb-angular</tt><table><tr><th>tool</th><th>size</th><th></th><th>gzip</th><th></th><th>brotli</th><th></th><th>runtime</th></tr>
-<tr><td>raw</td><td align=right>10,166,568</td><td align=right>100%</td><td align=right>2,475,364</td><td align=right>24%</td><td align=right>266,227</td><td align=right>2.6%</td><td></td><tr><td>uglify</td><td align=right>2,590,560</td><td align=right>25%</td><td align=right>662,199</td><td align=right>6.5%</td><td align=right>77,420</td><td align=right>0.8%</td><td align=right class=best>2.5</td></tr>
-<tr><td>uglify-compress-mangle</td><td align=right>1,406,099</td><td align=right>14%</td><td align=right class=best>480,960</td><td align=right class=best>4.7%</td><td align=right class=best>57,288</td><td align=right class=best>0.6%</td><td align=right>14.9</td></tr>
-<tr><td>closure</td><td align=right class=best>1,405,201</td><td align=right class=best>14%</td><td align=right>488,005</td><td align=right>4.8%</td><td align=right>69,816</td><td align=right>0.7%</td><td align=right>12.8</td></tr>
-<tr><td>closure-advanced</td><td colspan=6>failed</td><td align=right>22.1</td></tr>
-</table></p>
-<p><tt>react-dom</tt><table><tr><th>tool</th><th>size</th><th></th><th>gzip</th><th></th><th>brotli</th><th></th><th>runtime</th></tr>
-<tr><td>raw</td><td align=right>568,069</td><td align=right>100%</td><td align=right>132,468</td><td align=right>23%</td><td align=right>117,310</td><td align=right>21%</td><td></td><tr><td>uglify</td><td align=right>317,229</td><td align=right>56%</td><td align=right>69,227</td><td align=right>12%</td><td align=right>63,012</td><td align=right>11%</td><td align=right class=best>0.4</td></tr>
-<tr><td>uglify-compress-mangle</td><td align=right class=best>167,212</td><td align=right class=best>29%</td><td align=right class=best>53,185</td><td align=right class=best>9.4%</td><td align=right class=best>48,622</td><td align=right class=best>8.6%</td><td align=right>2.3</td></tr>
-<tr><td>closure</td><td align=right>168,569</td><td align=right>30%</td><td align=right>54,122</td><td align=right>9.5%</td><td align=right>49,796</td><td align=right>8.8%</td><td align=right>7.5</td></tr>
-<tr><td>closure-advanced</td><td colspan=6>failed</td><td align=right>3.5</td></tr>
-</table></p>
-<p><tt>vue</tt><table><tr><th>tool</th><th>size</th><th></th><th>gzip</th><th></th><th>brotli</th><th></th><th>runtime</th></tr>
-<tr><td>raw</td><td align=right>280,472</td><td align=right>100%</td><td align=right>76,233</td><td align=right>27%</td><td align=right>70,024</td><td align=right>25%</td><td></td><tr><td>uglify</td><td align=right>173,165</td><td align=right>62%</td><td align=right>49,296</td><td align=right>18%</td><td align=right>46,475</td><td align=right>17%</td><td align=right class=best>0.3</td></tr>
-<tr><td>uglify-compress-mangle</td><td align=right>103,769</td><td align=right>37%</td><td align=right>38,202</td><td align=right>14%</td><td align=right>36,274</td><td align=right>13%</td><td align=right>1.6</td></tr>
-<tr><td>closure</td><td align=right>105,053</td><td align=right>37%</td><td align=right>39,215</td><td align=right>14%</td><td align=right>37,366</td><td align=right>13%</td><td align=right>6.2</td></tr>
-<tr><td>closure-advanced</td><td align=right class=best>92,974</td><td align=right class=best>33%</td><td align=right class=best>37,350</td><td align=right class=best>13%</td><td align=right class=best>35,647</td><td align=right class=best>13%</td><td align=right>11.1</td></tr>
-</table></p>
-<h2>input details</h2><dl><dt>angularjs</dt><dd>angularjs 1.6.6 minified bundle</dd><dt>fake-10mb-angular</dt><dd>angularjs 1.6.6 minified, artificially repeated until input file >10mb</dd><dt>react-dom</dt><dd>react-dom 16.2.0 development bundle</dd><dt>vue</dt><dd>vue.js 2.5.3</dd></dl>
-<h2>tool details</h2><dl><dt>uglify</dt><dd>uglifyjs 3.2.2 with no options<br><tt>$ node_modules/.bin/uglifyjs %%in%% -o %%out%%</tt></dd><dt>uglify-compress-mangle</dt><dd>uglifyjs 3.2.2 with --compress and --mangle flags<br><tt>$ node_modules/.bin/uglifyjs %%in%% -o %%out%% --compress --mangle</tt></dd><dt>closure</dt><dd>Google Closure Compiler 20171203 with no flags<br><tt>$ java -jar node_modules/google-closure-compiler/compiler.jar --js_output_file=%%out%% %%in%%</tt></dd><dt>closure-advanced</dt><dd>Google Closure Compiler 20171203, advanced mode + externs<br><tt>$ java -jar node_modules/google-closure-compiler/compiler.jar -O advanced third_party/externs.js --js_output_file=%%out%% %%in%%</tt></dd></dl>
-<h2>output details</h2><dl><dt>gzip</dt><dd>gzip -9 size in bytes, supported by ~all browsers</dd><dt><a name='brotli'>brotli</dt><dd><a href='https://github.com/google/brotli'>brotli</a> -9 size in bytes, supported by <a href='https://caniuse.com/#feat=brotli'>many</a> browsers</dd><dt>runtime</dt><dd>time taken to generate output, in seconds</dd></dl>
+  <table><tr><th>input</th><th>tool</th><th>size</th><th></th><th>gzip</th><th></th><th>brotli</th><th></th><th>runtime</th></tr>
+<tr><td>angularjs</td></tr><tr><td></td><td>raw</td><td align=right>1,270,821</td><td align=right>100%</td><td align=right>309,875</td><td align=right>24%</td><td align=right>266,045</td><td align=right>21%</td><td></td><tr><td></td><td>uglify</td><td align=right>323,820</td><td align=right>25%</td><td align=right>83,243</td><td align=right>6.6%</td><td align=right>77,367</td><td align=right>6.1%</td><td align=right>0.6</td></tr>
+<tr><td></td><td>uglify-compress-mangle</td><td align=right>175,751</td><td align=right>14%</td><td align=right>60,823</td><td align=right>4.8%</td><td align=right>57,219</td><td align=right>4.5%</td><td align=right>2.4</td></tr>
+<tr><td></td><td>closure</td><td align=right>178,463</td><td align=right>14%</td><td align=right>62,581</td><td align=right>4.9%</td><td align=right>58,973</td><td align=right>4.6%</td><td align=right>6.8</td></tr>
+<tr><td></td><td>closure-advanced</td><td align=right class=best>147,709</td><td align=right class=best>12%</td><td align=right class=best>57,295</td><td align=right class=best>4.5%</td><td align=right class=best>54,390</td><td align=right class=best>4.3%</td><td align=right>11.2</td></tr>
+<tr><td></td><td>j8t</td><td align=right>322,684</td><td align=right>25%</td><td align=right>82,948</td><td align=right>6.5%</td><td align=right>77,091</td><td align=right>6.1%</td><td align=right class=best>0.0</td></tr>
+<tr><td>fake-10mb-angular</td></tr><tr><td></td><td>raw</td><td align=right>10,166,568</td><td align=right>100%</td><td align=right>2,475,364</td><td align=right>24%</td><td align=right>266,227</td><td align=right>2.6%</td><td></td><tr><td></td><td>uglify</td><td align=right>2,590,560</td><td align=right>25%</td><td align=right>662,199</td><td align=right>6.5%</td><td align=right>77,420</td><td align=right>0.8%</td><td align=right>2.4</td></tr>
+<tr><td></td><td>uglify-compress-mangle</td><td align=right>1,406,099</td><td align=right>14%</td><td align=right class=best>480,960</td><td align=right class=best>4.7%</td><td align=right class=best>57,288</td><td align=right class=best>0.6%</td><td align=right>15.0</td></tr>
+<tr><td></td><td>closure</td><td align=right class=best>1,405,201</td><td align=right class=best>14%</td><td align=right>488,005</td><td align=right>4.8%</td><td align=right>69,816</td><td align=right>0.7%</td><td align=right>13.2</td></tr>
+<tr><td></td><td>closure-advanced</td><td colspan=6>failed</td><td align=right>23.0</td></tr>
+<tr><td></td><td>j8t</td><td align=right>2,581,479</td><td align=right>25%</td><td align=right>659,697</td><td align=right>6.5%</td><td align=right>77,142</td><td align=right>0.8%</td><td align=right class=best>0.2</td></tr>
+<tr><td>react-dom</td></tr><tr><td></td><td>raw</td><td align=right>568,069</td><td align=right>100%</td><td align=right>132,468</td><td align=right>23%</td><td align=right>117,310</td><td align=right>21%</td><td></td><tr><td></td><td>uglify</td><td align=right>317,229</td><td align=right>56%</td><td align=right>69,227</td><td align=right>12%</td><td align=right>63,012</td><td align=right>11%</td><td align=right class=best>0.5</td></tr>
+<tr><td></td><td>uglify-compress-mangle</td><td align=right class=best>167,212</td><td align=right class=best>29%</td><td align=right class=best>53,185</td><td align=right class=best>9.4%</td><td align=right class=best>48,622</td><td align=right class=best>8.6%</td><td align=right>2.4</td></tr>
+<tr><td></td><td>closure</td><td align=right>168,569</td><td align=right>30%</td><td align=right>54,122</td><td align=right>9.5%</td><td align=right>49,796</td><td align=right>8.8%</td><td align=right>7.9</td></tr>
+<tr><td></td><td>closure-advanced</td><td colspan=6>failed</td><td align=right>3.9</td></tr>
+<tr><td></td><td>j8t</td><td colspan=6>failed</td><td align=right>0.0</td></tr>
+<tr><td>vue</td></tr><tr><td></td><td>raw</td><td align=right>280,472</td><td align=right>100%</td><td align=right>76,233</td><td align=right>27%</td><td align=right>70,024</td><td align=right>25%</td><td></td><tr><td></td><td>uglify</td><td align=right>173,165</td><td align=right>62%</td><td align=right>49,296</td><td align=right>18%</td><td align=right>46,475</td><td align=right>17%</td><td align=right>0.4</td></tr>
+<tr><td></td><td>uglify-compress-mangle</td><td align=right>103,769</td><td align=right>37%</td><td align=right>38,202</td><td align=right>14%</td><td align=right>36,274</td><td align=right>13%</td><td align=right>1.7</td></tr>
+<tr><td></td><td>closure</td><td align=right>105,053</td><td align=right>37%</td><td align=right>39,215</td><td align=right>14%</td><td align=right>37,366</td><td align=right>13%</td><td align=right>6.4</td></tr>
+<tr><td></td><td>closure-advanced</td><td align=right class=best>92,974</td><td align=right class=best>33%</td><td align=right class=best>37,350</td><td align=right class=best>13%</td><td align=right class=best>35,647</td><td align=right class=best>13%</td><td align=right>10.1</td></tr>
+<tr><td></td><td>j8t</td><td align=right>171,978</td><td align=right>61%</td><td align=right>49,081</td><td align=right>17%</td><td align=right>46,311</td><td align=right>17%</td><td align=right class=best>0.0</td></tr>
+</table>
 
+
+  <h2>input details</h2>
+  <dl><dt>angularjs</dt><dd>angularjs 1.6.6 minified bundle</dd><dt>fake-10mb-angular</dt><dd>angularjs 1.6.6 minified, artificially repeated until input file >10mb</dd><dt>react-dom</dt><dd>react-dom 16.2.0 development bundle</dd><dt>vue</dt><dd>vue.js 2.5.3</dd></dl>
+
+
+  <h2>tool details</h2>
+  <dl><dt>raw</dt><dd>raw input file, as baseline for comparison</dd><dt>uglify</dt><dd>uglifyjs 3.2.2 with no options<br><tt>$ node_modules/.bin/uglifyjs %%in%% -o %%out%%</tt></dd><dt>uglify-compress-mangle</dt><dd>uglifyjs 3.2.2 with --compress and --mangle flags<br><tt>$ node_modules/.bin/uglifyjs %%in%% -o %%out%% --compress --mangle</tt></dd><dt>closure</dt><dd>Google Closure Compiler 20171203 with no flags<br><tt>$ java -jar node_modules/google-closure-compiler/compiler.jar --js_output_file=%%out%% %%in%%</tt></dd><dt>closure-advanced</dt><dd>Google Closure Compiler 20171203, advanced mode + externs<br><tt>$ java -jar node_modules/google-closure-compiler/compiler.jar -O advanced third_party/externs.js --js_output_file=%%out%% %%in%%</tt></dd><dt>j8t</dt><dd>j8t work in progress<br><tt>$ ../j8t/target/release/js %%in%% > %%out%%</tt></dd></dl>
+
+
+  <h2>output details</h2>
+  <dl>
+    <dt>gzip</dt>
+    <dd>gzip -9 size in bytes, supported by ~all browsers</dd>
+
+    <dt><a name='brotli'>brotli</dt>
+    <dd><a href='https://github.com/google/brotli'>brotli</a> -9 size
+      in bytes, supported
+      by <a href='https://caniuse.com/#feat=brotli'>many</a> browsers
+    </dd>
+
+    <dt>runtime</dt>
+    <dd>time taken to generate output, in seconds</dd>
+  </dl>
 </body>
 </html>
 
