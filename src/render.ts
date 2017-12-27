@@ -109,18 +109,6 @@ function main() {
     }
     html += '</dl>\n';
 
-    html += '<h2>output details</h2>';
-    html += '<dl>';
-    html += `<dt>gzip</dt><dd>gzip -9 size in bytes, ` +
-        `supported by ~all browsers</dd>`;
-    html += `<dt><a name='brotli'>brotli</dt>` +
-        `<dd><a href='https://github.com/google/brotli'>brotli</a> -9 size in bytes, ` +
-        `supported by <a href='https://caniuse.com/#feat=brotli'>many</a> browsers` +
-        `</dd>`;
-    html += `<dt>runtime</dt>` +
-        `<dd>time taken to generate output, in seconds</dd>`;
-    html += '</dl>\n';
-
     let template = fs.readFileSync('src/results.template', 'utf8');
     console.log(template.replace(/%%content%%/, html));
 }

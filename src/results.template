@@ -42,5 +42,20 @@
 
   <h2>test results</h2>
   %%content%%
+
+  <h2>output details</h2>
+  <dl>
+    <dt>gzip</dt>
+    <dd>gzip -9 size in bytes, supported by ~all browsers</dd>
+
+    <dt><a name='brotli'>brotli</dt>
+    <dd><a href='https://github.com/google/brotli'>brotli</a> -9 size
+      in bytes, supported
+      by <a href='https://caniuse.com/#feat=brotli'>many</a> browsers
+    </dd>
+
+    <dt>runtime</dt>
+    <dd>time taken to generate output, in seconds</dd>
+  </dl>
 </body>
 </html>
