@@ -35,6 +35,19 @@ async function summarize(results: Result[]) {
     await promisify(fs.writeFile)('out/results.json', JSON.stringify(results));
 }
 
+async function gen10xAngular(path: string): Promise<string> {
+    const ngPath = metadata.js['angularjs'].path;
+    const ngJS = await promisify(fs.readFile)(ngPath, 'utf-8');
+    let data = ngJS;
+    while (data.length < 10*1000*1000) {
+        data += ngJS;
+    }
+
+    const outPath = `out/${path}`;
+    await promisify(fs.writeFile)(outPath, data);
+    return outPath;
+}
+
 async function main() {
     try {
         fs.mkdirSync('out');
@@ -47,7 +60,15 @@ async function main() {
 
     let results: Result[] = [];
     for (const input of inputs) {
-        const inputPath = metadata.js[input].path;
+        const {path, transform} = metadata.js[input];
+        let inputPath = path;
+        if (transform) {
+            if (transform === 'angularjs 10x') {
+                inputPath = await gen10xAngular(inputPath);
+            } else {
+                throw new Error(`unknown transform ${transform}`);
+            }
+        }
         for (const {name:tool, command} of metadata.tools) {
             console.log(`${input} ${tool}`);
             let out = `out/${tool}.${input}`;
