@@ -27,7 +27,8 @@ async function gzip(path: string) {
 }
 
 async function brotli(path: string) {
-    await exec(`./brotli -k -9 -f ${path}`);
+    const brotli = process.env['BROTLI'] || 'brotli';
+    await exec(`${brotli} -k -9 -f ${path}`);
 }
 
 async function summarize(results: Result[]) {
