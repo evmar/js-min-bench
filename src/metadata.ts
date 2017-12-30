@@ -18,7 +18,6 @@ export interface JSFileMetadata {
   path: string;
   desc: string;
   version?: string;
-  origin?: string;
   transform?: string;
 }
 export const js: { [name: string]: JSFileMetadata } = {
@@ -26,8 +25,6 @@ export const js: { [name: string]: JSFileMetadata } = {
     path: "third_party/angularjs/angular.js",
     desc: "angularjs 1.6.6 minified bundle",
     version: "1.6.6",
-    origin:
-      "https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"
   },
   "fake-10mb-angular": {
     transform: "angularjs 10x",
@@ -48,7 +45,6 @@ export const js: { [name: string]: JSFileMetadata } = {
     path: "third_party/vue/vue.js",
     desc: "vue.js 2.5.3",
     version: "2.5.3",
-    origin: "https://cdn.jsdelivr.net/npm/vue"
   }
 };
 
@@ -71,7 +67,7 @@ export const tools: ToolMetadata[] = [
   },
   {
     name: "uglify-compress-mangle",
-    desc: "uglifyjs 3.2.2 with --compress and --mangle flags",
+    desc: "uglifyjs 3.2.2 with <tt>--compress</tt> and <tt>--mangle</tt> flags",
     command: "node_modules/.bin/uglifyjs %%in%% -o %%out%% --compress --mangle"
   },
   {
@@ -88,7 +84,7 @@ export const tools: ToolMetadata[] = [
   },
   {
     name: "j8t",
-    desc: "j8t work in progress",
+    desc: "<a href='https://github.com/evmar/j8t'>j8t</a> (work in progress)",
     command: "../j8t/target/release/js %%in%% > %%out%%",
   }
 ];
