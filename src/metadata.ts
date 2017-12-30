@@ -17,7 +17,7 @@
 export interface JSFileMetadata {
   path: string;
   desc: string;
-  version: string;
+  version?: string;
   origin?: string;
   transform?: string;
 }
