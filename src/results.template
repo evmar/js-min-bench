@@ -61,7 +61,7 @@
     </dd>
 
     <dt>runtime</dt>
-    <dd>time taken to generate output, in seconds</dd>
+    <dd>time taken to generate output, in seconds, not including compression</dd>
   </dl>
 </body>
 </html>

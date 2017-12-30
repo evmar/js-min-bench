@@ -31,52 +31,39 @@ function rollup<T, K extends keyof T>(data: T[], key: K): Map<T[K], T[]> {
   return map;
 }
 
-function minRow<T, K extends keyof T>(data: T[], key: K): T {
+function min(data: number[]): number {
   let best = data[0];
-  for (let t of data) {
-    let val = t[key];
-    if (val < best[key]) best = t;
+  for (let d of data) {
+    if (d < best) best = d;
   }
   return best;
 }
 
-function percent(n: number, total: number): string {
-  const p = n * 100 / total;
-  return p.toFixed(p < 10 ? 1 : 0) + "%";
+function mult(n: number, base: number): string {
+  return (n / base).toFixed(1) + 'x';
+}
+
+function sizeCells(size: number, bestSize: number): string {
+  const best = size === bestSize ? " class=best" : "";
+  return `<td align=right${best}>${size.toLocaleString()}</td>` +
+    `<td align=right${best}>${mult(size, bestSize)}</td>`;
 }
 
 function resultsTable(allResults: Result[]): string {
   let html = `<table>`;
   html += `<tr><th>input</th><th>tool</th><th>size</th><th></th><th>gzip</th><th></th><th>brotli</th><th></th><th>runtime</th></tr>\n`;
   for (let [input, results] of rollup(allResults, "input").entries()) {
-    html += `<tr><td>${input}</td></tr>`;
-    let baseline = results[0].size;
+    html += `<tr><td colspan=2>${input}</td></tr>`;
     let candidates = results.slice(1).filter(r => !r.failed);
-    let bestSize = minRow(candidates, "size");
-    let bestGz = minRow(candidates, "gzSize");
-    let bestBr = minRow(candidates, "brSize");
-    let bestTime = minRow(candidates, "time");
+    let bestSize = min(([] as number[]).concat(...candidates.map(c => [c.size, c.gzSize, c.brSize])));
+    let bestTime = min(candidates.map(({time}) => time));
     for (let result of results) {
       html += `<tr><td></td><td>${result.tool}</td>`;
 
       if (!result.failed) {
-        let best = result === bestSize ? " class=best" : "";
-        html += `<td align=right${best}>${result.size.toLocaleString()}</td>`;
-        html += `<td align=right${best}>${percent(result.size, baseline)}</td>`;
-
-        best = result === bestGz ? " class=best" : "";
-        html += `<td align=right${best}>${result.gzSize.toLocaleString()}</td>`;
-        html += `<td align=right${best}>${percent(
-          result.gzSize,
-          baseline
-        )}</td>`;
-
-        best = result === bestBr ? " class=best" : "";
-        html += `<td align=right${best}>${result.brSize.toLocaleString()}</td>`;
-        html += `<td align=right${best}>${percent(
-          result.brSize,
-          baseline
-        )}</td>`;
+        html += sizeCells(result.size, bestSize);
+        html += sizeCells(result.gzSize, bestSize);
+        html += sizeCells(result.brSize, bestSize);
       } else {
         html += `<td colspan=6>failed</td>`;
       }
@@ -84,9 +71,9 @@ function resultsTable(allResults: Result[]): string {
       if (result === results[0]) {
         html += `<td></td>`;
       } else {
-        let best = result === bestTime ? " class=best" : "";
+        let best = result.time === bestTime ? " class=best" : "";
         let time = (result.time / 1000).toFixed(1);
-        html += `<td align=right${best}>${time}</td></tr>\n`;
+        html += `<td align=right${best}>${time}s</td></tr>\n`;
       }
     }
   }
