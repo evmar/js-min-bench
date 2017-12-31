@@ -99,7 +99,7 @@ export const tools: ToolMetadata[] = [
     name: "<a href='https://github.com/evmar/j8t'>j8t</a> (work in progress)",
     variants: [
       {
-        command: "../j8t/target/release/js %%in%% > %%out%%"
+        command: "../j8t/target/release/j8t %%in%% > %%out%%"
       }
     ]
   }
