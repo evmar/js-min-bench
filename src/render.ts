@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import * as fs from "fs";
-import { Result } from "./json";
-import * as metadata from "./metadata";
+import * as fs from 'fs';
+import {Result} from './json';
+import * as metadata from './metadata';
 
 function rollup<T, K extends keyof T>(data: T[], key: K): Map<T[K], T[]> {
   let map = new Map<T[K], T[]>();
@@ -40,15 +40,15 @@ function min(data: number[]): number {
 }
 
 function mult(n: number, base: number): string {
-  return (n / base).toFixed(1) + "x";
+  return (n / base).toFixed(1) + 'x';
 }
 
 function sizeCells(size: number, bestSize: number): string {
-  const best = size === bestSize ? " class=best" : "";
+  const best = size === bestSize ? ' class=best' : '';
   return (
     `<td align=right${best}>${size.toLocaleString()}</td>` +
     `<td align=right${best}>${
-      size == bestSize ? "" : mult(size, bestSize)
+      size == bestSize ? '' : mult(size, bestSize)
     }</td>`
   );
 }
@@ -56,7 +56,7 @@ function sizeCells(size: number, bestSize: number): string {
 function resultsTable(allResults: Result[]): string {
   let html = `<table>`;
   html += `<tr><th>input+tool+variant</th><th>size</th><th></th><th>gzip</th><th></th><th>brotli</th><th></th><th>runtime</th></tr>\n`;
-  for (const [input, results] of rollup(allResults, "input").entries()) {
+  for (const [input, results] of rollup(allResults, 'input').entries()) {
     html += `<tr><td>${input}</td></tr>`;
     const candidates = results.slice(1).filter(r => !r.failed);
     const bestSize = min(
@@ -64,8 +64,8 @@ function resultsTable(allResults: Result[]): string {
         ...candidates.map(c => [c.size, c.gzSize, c.brSize])
       )
     );
-    const bestTime = min(candidates.map(({ time }) => time));
-    let lastTool = "";
+    const bestTime = min(candidates.map(({time}) => time));
+    let lastTool = '';
     for (const result of results) {
       html += `<tr>`;
       if (result.tool != lastTool) {
@@ -86,7 +86,7 @@ function resultsTable(allResults: Result[]): string {
       if (result === results[0]) {
         html += `<td></td>`;
       } else {
-        let best = result.time === bestTime ? " class=best" : "";
+        let best = result.time === bestTime ? ' class=best' : '';
         let time = (result.time / 1000).toFixed(1);
         html += `<td align=right${best}>${time}s</td></tr>\n`;
       }
@@ -97,34 +97,34 @@ function resultsTable(allResults: Result[]): string {
 }
 
 function inputDetails(): string {
-  let html = "<dl>";
+  let html = '<dl>';
   const inputs = Object.keys(metadata.js);
   inputs.sort();
   for (const name of inputs) {
     html += `<dt>${name}</dt>` + `<dd>${metadata.js[name].desc}</dd>`;
   }
-  html += "</dl>\n";
+  html += '</dl>\n';
   return html;
 }
 
 function toolDetails(): string {
-  let html = "<dl>";
+  let html = '<dl>';
   html +=
     `<dt>raw</dt>` + `<dd>raw input file, as baseline for comparison</dd>`;
   for (const tool of metadata.tools.slice(1)) {
     html += `<dt>${tool.id}</dt>` + `<dd>${tool.name}<br></dd>`;
   }
-  html += "</dl>\n";
+  html += '</dl>\n';
   return html;
 }
 
 function main() {
   const allResults: Result[] = JSON.parse(
-    fs.readFileSync("out/results.json", "utf8")
+    fs.readFileSync('out/results.json', 'utf8')
   );
 
-  const template = fs.readFileSync("src/results.template", "utf8");
-  const templateData: { [k: string]: string } = {
+  const template = fs.readFileSync('src/results.template', 'utf8');
+  const templateData: {[k: string]: string} = {
     resultsTable: resultsTable(allResults),
     inputDetails: inputDetails(),
     toolDetails: toolDetails()

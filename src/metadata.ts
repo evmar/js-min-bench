@@ -20,86 +20,86 @@ export interface JSFileMetadata {
   version?: string;
   transform?: string;
 }
-export const js: { [name: string]: JSFileMetadata } = {
+export const js: {[name: string]: JSFileMetadata} = {
   angularjs: {
-    path: "third_party/angularjs/angular.js",
-    desc: "angularjs 1.6.6 minified bundle",
-    version: "1.6.6"
+    path: 'third_party/angularjs/angular.js',
+    desc: 'angularjs 1.6.6 minified bundle',
+    version: '1.6.6'
   },
-  "fake-10mb-angular": {
-    transform: "angularjs 10x",
-    path: "fake-10mb-angular.js",
+  'fake-10mb-angular': {
+    transform: 'angularjs 10x',
+    path: 'fake-10mb-angular.js',
     desc:
-      "angularjs 1.6.6 minified, artificially repeated until input file >10mb",
-    version: "1.6.6"
+      'angularjs 1.6.6 minified, artificially repeated until input file >10mb',
+    version: '1.6.6'
   },
   react: {
-    path: "third_party/react/react.production.min.js",
-    desc: "react production bundle (without minification)"
+    path: 'third_party/react/react.production.min.js',
+    desc: 'react production bundle (without minification)'
   },
-  "react-dom": {
-    path: "third_party/react/react-dom.production.min.js",
-    desc: "react-dom production bundle (without minification)"
+  'react-dom': {
+    path: 'third_party/react/react-dom.production.min.js',
+    desc: 'react-dom production bundle (without minification)'
   },
   vue: {
-    path: "third_party/vue/vue.js",
-    desc: "vue.js 2.5.3",
-    version: "2.5.3"
+    path: 'third_party/vue/vue.js',
+    desc: 'vue.js 2.5.3',
+    version: '2.5.3'
   }
 };
 
 export interface ToolMetadata {
   id: string;
   name: string;
-  variants: Array<{ id?: string; desc?: string; command: string }>;
+  variants: Array<{id?: string; desc?: string; command: string}>;
 }
 export const tools: ToolMetadata[] = [
   // Note: code expects 'raw' to be first.
   {
-    id: "raw",
-    name: "baseline input file",
+    id: 'raw',
+    name: 'baseline input file',
     variants: [
       {
-        command: "cp %%in%% %%out%%"
+        command: 'cp %%in%% %%out%%'
       }
     ]
   },
   {
-    id: "uglify",
-    name: "uglifyjs 3.2.2",
+    id: 'uglify',
+    name: 'uglifyjs 3.2.2',
     variants: [
-      { command: "node_modules/.bin/uglifyjs %%in%% -o %%out%%" },
+      {command: 'node_modules/.bin/uglifyjs %%in%% -o %%out%%'},
       {
-        id: "compress-mangle",
-        desc: "<tt>--compress</tt> and <tt>--mangle</tt> flags",
+        id: 'compress-mangle',
+        desc: '<tt>--compress</tt> and <tt>--mangle</tt> flags',
         command:
-          "node_modules/.bin/uglifyjs %%in%% -o %%out%% --compress --mangle"
+          'node_modules/.bin/uglifyjs %%in%% -o %%out%% --compress --mangle'
       }
     ]
   },
   {
-    id: "closure",
+    id: 'closure',
     name:
       "<a href='https://developers.google.com/closure/compiler/'>Google Closure Compiler</a> 20171203",
     variants: [
       {
         command:
-          "java -jar node_modules/google-closure-compiler/compiler.jar --js_output_file=%%out%% %%in%%"
+          'java -jar node_modules/google-closure-compiler/compiler.jar --js_output_file=%%out%% %%in%%'
       },
       {
-        id: "advanced",
-        desc: "advanced mode + externs",
+        id: 'advanced',
+        desc: 'advanced mode + externs',
         command:
-          "java -jar node_modules/google-closure-compiler/compiler.jar -O advanced third_party/externs.js --js_output_file=%%out%% %%in%%"
+          'java -jar node_modules/google-closure-compiler/compiler.jar -O advanced third_party/externs.js --js_output_file=%%out%% %%in%%'
       }
     ]
   },
   {
-    id: "j8t",
+    id: 'j8t',
     name: "<a href='https://github.com/evmar/j8t'>j8t</a> (work in progress)",
     variants: [
       {
-        command: "../j8t/target/release/j8t %%in%% > %%out%%"
+        command: '../j8t/target/release/j8t %%in%% > %%out%%'
       }
     ]
   }

@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import { promisify } from "util";
-import * as fs from "fs";
-import * as childProcess from "child_process";
-import { Result } from "./json";
-import * as metadata from "./metadata";
-import * as commander from "commander";
+import {promisify} from 'util';
+import * as fs from 'fs';
+import * as childProcess from 'child_process';
+import {Result} from './json';
+import * as metadata from './metadata';
+import * as commander from 'commander';
 
 const exec = promisify(childProcess.exec);
 
@@ -28,17 +28,17 @@ async function gzip(path: string) {
 }
 
 async function brotli(path: string) {
-  const brotli = process.env["BROTLI"] || "brotli";
+  const brotli = process.env['BROTLI'] || 'brotli';
   await exec(`${brotli} -k -9 -f ${path}`);
 }
 
 async function summarize(results: Result[]) {
-  await promisify(fs.writeFile)("out/results.json", JSON.stringify(results));
+  await promisify(fs.writeFile)('out/results.json', JSON.stringify(results));
 }
 
 async function gen10xAngular(path: string): Promise<string> {
-  const ngPath = metadata.js["angularjs"].path;
-  const ngJS = await promisify(fs.readFile)(ngPath, "utf-8");
+  const ngPath = metadata.js['angularjs'].path;
+  const ngJS = await promisify(fs.readFile)(ngPath, 'utf-8');
   let data = ngJS;
   while (data.length < 10 * 1000 * 1000) {
     data += ngJS;
@@ -51,16 +51,16 @@ async function gen10xAngular(path: string): Promise<string> {
 
 async function main() {
   commander
-    .option("--tools [list]", "tools to run [default=all]", arg =>
+    .option('--tools [list]', 'tools to run [default=all]', arg =>
       arg.split(/,/)
     )
     .parse(process.argv);
   const tools: string[] | undefined = commander.tools;
 
   try {
-    fs.mkdirSync("out");
+    fs.mkdirSync('out');
   } catch (e) {
-    if (e.code != "EEXIST") throw e;
+    if (e.code != 'EEXIST') throw e;
   }
 
   let inputs = Object.keys(metadata.js);
@@ -68,22 +68,22 @@ async function main() {
 
   let results: Result[] = [];
   for (const input of inputs) {
-    const { path, transform } = metadata.js[input];
+    const {path, transform} = metadata.js[input];
     let inputPath = path;
     if (transform) {
-      if (transform === "angularjs 10x") {
+      if (transform === 'angularjs 10x') {
         inputPath = await gen10xAngular(inputPath);
       } else {
         throw new Error(`unknown transform ${transform}`);
       }
     }
-    for (const { id: tool, variants } of metadata.tools) {
-      for (const { id: variant, command } of variants) {
-        const toolVariant = tool + (variant ? `-${variant}` : "");
+    for (const {id: tool, variants} of metadata.tools) {
+      for (const {id: variant, command} of variants) {
+        const toolVariant = tool + (variant ? `-${variant}` : '');
         if (tools && tools.indexOf(toolVariant) < 0) continue;
         console.log(`${input} ${toolVariant}`);
         let out = `out/${input}.${toolVariant}`;
-        let cmd = command.replace("%%in%%", inputPath).replace("%%out%%", out);
+        let cmd = command.replace('%%in%%', inputPath).replace('%%out%%', out);
         let start = Date.now();
         try {
           await exec(cmd);
