@@ -40,13 +40,15 @@ function min(data: number[]): number {
 }
 
 function mult(n: number, base: number): string {
-  return (n / base).toFixed(1) + 'x';
+  return (n / base).toFixed(1) + "x";
 }
 
 function sizeCells(size: number, bestSize: number): string {
   const best = size === bestSize ? " class=best" : "";
-  return `<td align=right${best}>${size.toLocaleString()}</td>` +
-    `<td align=right${best}>${mult(size, bestSize)}</td>`;
+  return (
+    `<td align=right${best}>${size.toLocaleString()}</td>` +
+    `<td align=right${best}>${mult(size, bestSize)}</td>`
+  );
 }
 
 function resultsTable(allResults: Result[]): string {
@@ -55,8 +57,12 @@ function resultsTable(allResults: Result[]): string {
   for (let [input, results] of rollup(allResults, "input").entries()) {
     html += `<tr><td colspan=2>${input}</td></tr>`;
     let candidates = results.slice(1).filter(r => !r.failed);
-    let bestSize = min(([] as number[]).concat(...candidates.map(c => [c.size, c.gzSize, c.brSize])));
-    let bestTime = min(candidates.map(({time}) => time));
+    let bestSize = min(
+      ([] as number[]).concat(
+        ...candidates.map(c => [c.size, c.gzSize, c.brSize])
+      )
+    );
+    let bestTime = min(candidates.map(({ time }) => time));
     for (let result of results) {
       html += `<tr><td></td><td>${result.tool}</td>`;
 
@@ -94,7 +100,8 @@ function inputDetails(): string {
 
 function toolDetails(): string {
   let html = "<dl>";
-  html += `<dt>raw</dt>` + `<dd>raw input file, as baseline for comparison</dd>`;
+  html +=
+    `<dt>raw</dt>` + `<dd>raw input file, as baseline for comparison</dd>`;
   for (const tool of metadata.tools.slice(1)) {
     html +=
       `<dt>${tool.name}</dt>` +
@@ -111,10 +118,10 @@ function main() {
   );
 
   const template = fs.readFileSync("src/results.template", "utf8");
-  const templateData: {[k: string]: string} = {
+  const templateData: { [k: string]: string } = {
     resultsTable: resultsTable(allResults),
     inputDetails: inputDetails(),
-    toolDetails: toolDetails(),
+    toolDetails: toolDetails()
   };
   console.log(template.replace(/%%(\w+)%%/g, (_, f) => templateData[f]));
 }

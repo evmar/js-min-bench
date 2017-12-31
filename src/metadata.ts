@@ -24,7 +24,7 @@ export const js: { [name: string]: JSFileMetadata } = {
   angularjs: {
     path: "third_party/angularjs/angular.js",
     desc: "angularjs 1.6.6 minified bundle",
-    version: "1.6.6",
+    version: "1.6.6"
   },
   "fake-10mb-angular": {
     transform: "angularjs 10x",
@@ -33,18 +33,18 @@ export const js: { [name: string]: JSFileMetadata } = {
       "angularjs 1.6.6 minified, artificially repeated until input file >10mb",
     version: "1.6.6"
   },
-  "react": {
+  react: {
     path: "third_party/react/react.production.min.js",
-    desc: "react production bundle (without minification)",
+    desc: "react production bundle (without minification)"
   },
   "react-dom": {
     path: "third_party/react/react-dom.production.min.js",
-    desc: "react-dom production bundle (without minification)",
+    desc: "react-dom production bundle (without minification)"
   },
   vue: {
     path: "third_party/vue/vue.js",
     desc: "vue.js 2.5.3",
-    version: "2.5.3",
+    version: "2.5.3"
   }
 };
 
@@ -85,6 +85,6 @@ export const tools: ToolMetadata[] = [
   {
     name: "j8t",
     desc: "<a href='https://github.com/evmar/j8t'>j8t</a> (work in progress)",
-    command: "../j8t/target/release/js %%in%% > %%out%%",
+    command: "../j8t/target/release/js %%in%% > %%out%%"
   }
 ];
