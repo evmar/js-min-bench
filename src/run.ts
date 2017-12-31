@@ -77,42 +77,47 @@ async function main() {
         throw new Error(`unknown transform ${transform}`);
       }
     }
-    for (const { name: tool, command } of metadata.tools) {
-      if (tools && tools.indexOf(tool) < 0) continue;
-      console.log(`${input} ${tool}`);
-      let out = `out/${tool}.${input}`;
-      let cmd = command.replace("%%in%%", inputPath).replace("%%out%%", out);
-      let start = Date.now();
-      try {
-        await exec(cmd);
-      } catch (e) {
+    for (const { id: tool, variants } of metadata.tools) {
+      for (const { id: variant, command } of variants) {
+        const toolVariant = tool + (variant ? `-${variant}` : "");
+        if (tools && tools.indexOf(toolVariant) < 0) continue;
+        console.log(`${input} ${toolVariant}`);
+        let out = `out/${input}.${toolVariant}`;
+        let cmd = command.replace("%%in%%", inputPath).replace("%%out%%", out);
+        let start = Date.now();
+        try {
+          await exec(cmd);
+        } catch (e) {
+          let end = Date.now();
+          results.push({
+            input,
+            tool,
+            variant,
+            time: end - start,
+            size: 0,
+            gzSize: 0,
+            brSize: 0,
+            failed: true
+          });
+          continue;
+        }
         let end = Date.now();
+        let size = fs.statSync(out).size;
+        await gzip(out);
+        let gzSize = fs.statSync(`${out}.gz`).size;
+        await brotli(out);
+        let brSize = fs.statSync(`${out}.br`).size;
+
         results.push({
           input,
           tool,
+          variant,
           time: end - start,
-          size: 0,
-          gzSize: 0,
-          brSize: 0,
-          failed: true
+          size,
+          gzSize,
+          brSize
         });
-        continue;
       }
-      let end = Date.now();
-      let size = fs.statSync(out).size;
-      await gzip(out);
-      let gzSize = fs.statSync(`${out}.gz`).size;
-      await brotli(out);
-      let brSize = fs.statSync(`${out}.br`).size;
-
-      results.push({
-        input,
-        tool,
-        time: end - start,
-        size,
-        gzSize,
-        brSize
-      });
     }
   }
 

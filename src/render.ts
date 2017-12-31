@@ -47,31 +47,40 @@ function sizeCells(size: number, bestSize: number): string {
   const best = size === bestSize ? " class=best" : "";
   return (
     `<td align=right${best}>${size.toLocaleString()}</td>` +
-    `<td align=right${best}>${mult(size, bestSize)}</td>`
+    `<td align=right${best}>${
+      size == bestSize ? "" : mult(size, bestSize)
+    }</td>`
   );
 }
 
 function resultsTable(allResults: Result[]): string {
   let html = `<table>`;
-  html += `<tr><th>input</th><th>tool</th><th>size</th><th></th><th>gzip</th><th></th><th>brotli</th><th></th><th>runtime</th></tr>\n`;
-  for (let [input, results] of rollup(allResults, "input").entries()) {
-    html += `<tr><td colspan=2>${input}</td></tr>`;
-    let candidates = results.slice(1).filter(r => !r.failed);
-    let bestSize = min(
+  html += `<tr><th>input+tool+variant</th><th>size</th><th></th><th>gzip</th><th></th><th>brotli</th><th></th><th>runtime</th></tr>\n`;
+  for (const [input, results] of rollup(allResults, "input").entries()) {
+    html += `<tr><td>${input}</td></tr>`;
+    const candidates = results.slice(1).filter(r => !r.failed);
+    const bestSize = min(
       ([] as number[]).concat(
         ...candidates.map(c => [c.size, c.gzSize, c.brSize])
       )
     );
-    let bestTime = min(candidates.map(({ time }) => time));
-    for (let result of results) {
-      html += `<tr><td></td><td>${result.tool}</td>`;
+    const bestTime = min(candidates.map(({ time }) => time));
+    let lastTool = "";
+    for (const result of results) {
+      html += `<tr>`;
+      if (result.tool != lastTool) {
+        html += `<td style='padding-left: 4ex'>${result.tool}</td>`;
+        lastTool = result.tool;
+      } else {
+        html += `<td style='padding-left: 8ex'>+ ${result.variant}</td>`;
+      }
 
       if (!result.failed) {
         html += sizeCells(result.size, bestSize);
         html += sizeCells(result.gzSize, bestSize);
         html += sizeCells(result.brSize, bestSize);
       } else {
-        html += `<td colspan=6>failed</td>`;
+        html += `<td colspan=6 align=center>failed</td>`;
       }
 
       if (result === results[0]) {
@@ -103,10 +112,7 @@ function toolDetails(): string {
   html +=
     `<dt>raw</dt>` + `<dd>raw input file, as baseline for comparison</dd>`;
   for (const tool of metadata.tools.slice(1)) {
-    html +=
-      `<dt>${tool.name}</dt>` +
-      `<dd>${tool.desc}<br>` +
-      `<tt>$ ${tool.command}</tt></dd>`;
+    html += `<dt>${tool.id}</dt>` + `<dd>${tool.name}<br></dd>`;
   }
   html += "</dl>\n";
   return html;

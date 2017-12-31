@@ -49,42 +49,58 @@ export const js: { [name: string]: JSFileMetadata } = {
 };
 
 export interface ToolMetadata {
+  id: string;
   name: string;
-  desc: string;
-  command: string;
+  variants: Array<{ id?: string; desc?: string; command: string }>;
 }
 export const tools: ToolMetadata[] = [
   // Note: code expects 'raw' to be first.
   {
-    name: "raw",
-    desc: "baseline input file",
-    command: "cp %%in%% %%out%%"
+    id: "raw",
+    name: "baseline input file",
+    variants: [
+      {
+        command: "cp %%in%% %%out%%"
+      }
+    ]
   },
   {
-    name: "uglify",
-    desc: "uglifyjs 3.2.2 with no options",
-    command: "node_modules/.bin/uglifyjs %%in%% -o %%out%%"
+    id: "uglify",
+    name: "uglifyjs 3.2.2",
+    variants: [
+      { command: "node_modules/.bin/uglifyjs %%in%% -o %%out%%" },
+      {
+        id: "compress-mangle",
+        desc: "<tt>--compress</tt> and <tt>--mangle</tt> flags",
+        command:
+          "node_modules/.bin/uglifyjs %%in%% -o %%out%% --compress --mangle"
+      }
+    ]
   },
   {
-    name: "uglify-compress-mangle",
-    desc: "uglifyjs 3.2.2 with <tt>--compress</tt> and <tt>--mangle</tt> flags",
-    command: "node_modules/.bin/uglifyjs %%in%% -o %%out%% --compress --mangle"
+    id: "closure",
+    name:
+      "<a href='https://developers.google.com/closure/compiler/'>Google Closure Compiler</a> 20171203",
+    variants: [
+      {
+        command:
+          "java -jar node_modules/google-closure-compiler/compiler.jar --js_output_file=%%out%% %%in%%"
+      },
+      {
+        id: "advanced",
+        desc: "advanced mode + externs",
+        command:
+          "java -jar node_modules/google-closure-compiler/compiler.jar -O advanced third_party/externs.js --js_output_file=%%out%% %%in%%"
+      }
+    ]
   },
   {
-    name: "closure",
-    desc: "Google Closure Compiler 20171203 with no flags",
-    command:
-      "java -jar node_modules/google-closure-compiler/compiler.jar --js_output_file=%%out%% %%in%%"
-  },
-  {
-    name: "closure-advanced",
-    desc: "Google Closure Compiler 20171203, advanced mode + externs",
-    command:
-      "java -jar node_modules/google-closure-compiler/compiler.jar -O advanced third_party/externs.js --js_output_file=%%out%% %%in%%"
-  },
-  {
-    name: "j8t",
-    desc: "<a href='https://github.com/evmar/j8t'>j8t</a> (work in progress)",
-    command: "../j8t/target/release/js %%in%% > %%out%%"
+    id: "j8t",
+    name: "<a href='https://github.com/evmar/j8t'>j8t</a> (work in progress)",
+    variants: [
+      {
+        command: "../j8t/target/release/js %%in%% > %%out%%"
+      }
+    ]
   }
 ];

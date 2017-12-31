@@ -17,6 +17,7 @@
 export interface Result {
   input: string;
   tool: string;
+  variant?: string;
   time: number;
   size: number;
   gzSize: number;
