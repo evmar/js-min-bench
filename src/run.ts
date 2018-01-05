@@ -14,42 +14,43 @@
  * limitations under the License.
  */
 
-import {promisify} from 'util';
 import * as fs from 'fs';
 import * as childProcess from 'child_process';
 import {Result} from './json';
 import * as metadata from './metadata';
 import * as commander from 'commander';
 
-const exec = promisify(childProcess.exec);
-
-async function gzip(path: string) {
-  await exec(`gzip -k -9 -f ${path}`);
+function exec(cmd: string) {
+  childProcess.execSync(cmd, {stdio:'inherit'});
 }
 
-async function brotli(path: string) {
+function gzip(path: string) {
+  exec(`gzip -k -9 -f ${path}`);
+}
+
+function brotli(path: string) {
   const brotli = process.env['BROTLI'] || 'brotli';
-  await exec(`${brotli} -k -9 -f ${path}`);
+  exec(`${brotli} -k -9 -f ${path}`);
 }
 
-async function summarize(results: Result[]) {
-  await promisify(fs.writeFile)('out/results.json', JSON.stringify(results));
+function summarize(results: Result[]) {
+  fs.writeFileSync('out/results.json', JSON.stringify(results));
 }
 
-async function gen10xAngular(path: string): Promise<string> {
+function gen10xAngular(path: string): string {
   const ngPath = metadata.js['angularjs'].path;
-  const ngJS = await promisify(fs.readFile)(ngPath, 'utf-8');
+  const ngJS = fs.readFileSync(ngPath, 'utf-8');
   let data = ngJS;
   while (data.length < 10 * 1000 * 1000) {
     data += ngJS;
   }
 
   const outPath = `out/${path}`;
-  await promisify(fs.writeFile)(outPath, data);
+  fs.writeFileSync(outPath, data);
   return outPath;
 }
 
-async function main() {
+function main() {
   commander
     .option('--tools [regex]', 'regex to match tools to run', (arg) => new RegExp(arg))
     .option('--inputs [regex]', 'regex to match inputs to run', (arg) => new RegExp(arg))
@@ -73,7 +74,7 @@ async function main() {
     let inputPath = path;
     if (transform) {
       if (transform === 'angularjs 10x') {
-        inputPath = await gen10xAngular(inputPath);
+        inputPath = gen10xAngular(inputPath);
       } else {
         throw new Error(`unknown transform ${transform}`);
       }
@@ -87,7 +88,7 @@ async function main() {
         let cmd = command.replace('%%in%%', inputPath).replace('%%out%%', out);
         let start = Date.now();
         try {
-          await exec(cmd);
+          exec(cmd);
         } catch (e) {
           let end = Date.now();
           results.push({
@@ -104,9 +105,9 @@ async function main() {
         }
         let end = Date.now();
         let size = fs.statSync(out).size;
-        await gzip(out);
+        gzip(out);
         let gzSize = fs.statSync(`${out}.gz`).size;
-        await brotli(out);
+        brotli(out);
         let brSize = fs.statSync(`${out}.br`).size;
 
         results.push({
@@ -122,10 +123,7 @@ async function main() {
     }
   }
 
-  await summarize(results);
+  summarize(results);
 }
 
-main().catch(e => {
-  console.error(e);
-  process.exitCode = 1;
-});
+main();
