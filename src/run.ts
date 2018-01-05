@@ -51,11 +51,11 @@ async function gen10xAngular(path: string): Promise<string> {
 
 async function main() {
   commander
-    .option('--tools [list]', 'tools to run [default=all]', arg =>
-      arg.split(/,/)
-    )
-    .parse(process.argv);
-  const tools: string[] | undefined = commander.tools;
+    .option('--tools [regex]', 'regex to match tools to run', (arg) => new RegExp(arg))
+    .option('--inputs [regex]', 'regex to match inputs to run', (arg) => new RegExp(arg))
+  .parse(process.argv);
+  const toolFilter = commander.tools;
+  const inputFilter = commander.inputs;
 
   try {
     fs.mkdirSync('out');
@@ -68,6 +68,7 @@ async function main() {
 
   let results: Result[] = [];
   for (const input of inputs) {
+    if (inputFilter && !inputFilter.test(input)) continue;
     const {path, transform} = metadata.js[input];
     let inputPath = path;
     if (transform) {
@@ -80,7 +81,7 @@ async function main() {
     for (const {id: tool, variants} of metadata.tools) {
       for (const {id: variant, command} of variants) {
         const toolVariant = tool + (variant ? `-${variant}` : '');
-        if (tools && tools.indexOf(toolVariant) < 0) continue;
+        if (toolFilter && !toolFilter.test(toolVariant)) continue;
         console.log(`${input} ${toolVariant}`);
         let out = `out/${input}.${toolVariant}`;
         let cmd = command.replace('%%in%%', inputPath).replace('%%out%%', out);
