@@ -1,0 +1,67 @@
+--- webpack.config.orig.js	2018-01-05 13:28:16.173813484 -0800
++++ webpack.config.js	2018-01-05 13:28:44.057820232 -0800
+@@ -105,11 +105,9 @@
+   },
+   "entry": {
+     "main": [
++      "./src/polyfills.ts",
+       "./src/main.ts"
+     ],
+-    "polyfills": [
+-      "./src/polyfills.ts"
+-    ],
+     "styles": [
+       "./src/styles.css"
+     ]
+@@ -476,19 +474,6 @@
+     }
+     }),
+     new BaseHrefWebpackPlugin({}),
+-    new CommonsChunkPlugin({
+-      "name": [
+-        "inline"
+-      ],
+-      "minChunks": null
+-    }),
+-    new CommonsChunkPlugin({
+-      "name": [
+-        "main"
+-      ],
+-      "minChunks": 2,
+-      "async": "common"
+-    }),
+     new ExtractTextPlugin({
+       "filename": "[name].[contenthash:20].bundle.css"
+     }),
+@@ -525,31 +510,6 @@
+       "pattern": /^(MIT|ISC|BSD.*)$/
+     }),
+     new PurifyPlugin(),
+-    new UglifyJsPlugin({
+-      "test": /\.js$/i,
+-      "extractComments": false,
+-      "sourceMap": false,
+-      "cache": false,
+-      "parallel": false,
+-      "uglifyOptions": {
+-        "output": {
+-          "ascii_only": true,
+-          "comments": false,
+-          "webkit": true
+-        },
+-        "ecma": 5,
+-        "warnings": false,
+-        "ie8": false,
+-        "mangle": {
+-          "safari10": true
+-        },
+-        "compress": {
+-          "typeofs": false,
+-          "pure_getters": true,
+-          "passes": 3
+-        }
+-      }
+-    }),
+     new AngularCompilerPlugin({
+       "mainPath": "main.ts",
+       "platform": 0,

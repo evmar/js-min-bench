@@ -11,7 +11,7 @@ $ ng new hello
 $ cd hello
 $ ng eject --target=production
 $ edit webpack.config.js
-### => comment out the use of the uglify plugin
+### apply the changes in config.patch, which remove chunk splitting and uglify.
 $ ./node_modules/.bin/webpack
 $ cp dist/main.*.js ../main.js
 $ rm -rf hello  # >250mb!

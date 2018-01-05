@@ -88,13 +88,13 @@ export const tools: ToolMetadata[] = [
     variants: [
       {
         command:
-          'java -jar node_modules/google-closure-compiler/compiler.jar --js_output_file=%%out%% %%in%%'
+          'java -jar node_modules/google-closure-compiler/compiler.jar --warning_level=QUIET --js_output_file=%%out%% %%in%%'
       },
       {
         id: 'advanced',
         desc: 'advanced mode + externs',
         command:
-          'java -jar node_modules/google-closure-compiler/compiler.jar -O advanced third_party/externs.js --js_output_file=%%out%% %%in%%'
+          'java -jar node_modules/google-closure-compiler/compiler.jar --warning_level=QUIET -O advanced third_party/externs.js --js_output_file=%%out%% %%in%%'
       }
     ]
   },

@@ -21,3 +21,12 @@ var module;
 var global;
 var define;
 var Proxy;
+
+// used by core-js (?)
+var __e;
+var __g;
+
+// used by angular, often via 'typeof x' tests first.
+var Zone;
+var COMPILED;
+var Hammer;
