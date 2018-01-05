@@ -15,6 +15,7 @@
  */
 
 import * as fs from 'fs';
+import * as path from 'path';
 import {Result} from './json';
 import * as metadata from './metadata';
 
@@ -101,7 +102,15 @@ function inputDetails(): string {
   const inputs = Object.keys(metadata.js);
   inputs.sort();
   for (const name of inputs) {
-    html += `<dt>${name}</dt>` + `<dd>${metadata.js[name].desc}</dd>`;
+    const meta = metadata.js[name];
+    let desc = meta.desc;
+    if (meta.path.match(/^third_party/)) {
+      const readmePath = path.join(path.dirname(meta.path), 'README.md');
+      if (fs.existsSync(readmePath)) {
+        desc += `; <a href='${readmePath}'>read more</a>`;
+      }
+    }
+    html += `<dt>${name}</dt>` + `<dd>${desc}</dd>`;
   }
   html += '</dl>\n';
   return html;

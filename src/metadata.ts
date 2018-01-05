@@ -33,13 +33,17 @@ export const js: {[name: string]: JSFileMetadata} = {
       'angularjs 1.6.6 minified, artificially repeated until input file >10mb',
     version: '1.6.6'
   },
+  'angular-hello': {
+    path: 'third_party/angular/main.js',
+    desc: 'angular5 + cli hello world',
+  },
   react: {
     path: 'third_party/react/react.production.min.js',
-    desc: 'react production bundle (without minification)'
+    desc: 'react production bundle'
   },
   'react-dom': {
     path: 'third_party/react/react-dom.production.min.js',
-    desc: 'react-dom production bundle (without minification)'
+    desc: 'react-dom production bundle'
   },
   vue: {
     path: 'third_party/vue/vue.js',
