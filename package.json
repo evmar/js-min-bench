@@ -15,7 +15,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "fmt": "prettier --write src/*.ts",
+    "fmt": "prettier --write *.md src/*.ts third_party/**/*.md",
     "watch": "tsc -w",
     "build": "tsc",
     "render": "node build/render.js > index.html",
