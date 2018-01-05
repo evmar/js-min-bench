@@ -21,7 +21,7 @@ import * as metadata from './metadata';
 import * as commander from 'commander';
 
 function exec(cmd: string) {
-  childProcess.execSync(cmd, {stdio:'inherit'});
+  childProcess.execSync(cmd, {stdio: 'inherit'});
 }
 
 function gzip(path: string) {
@@ -52,9 +52,17 @@ function gen10xAngular(path: string): string {
 
 function main() {
   commander
-    .option('--tools [regex]', 'regex to match tools to run', (arg) => new RegExp(arg))
-    .option('--inputs [regex]', 'regex to match inputs to run', (arg) => new RegExp(arg))
-  .parse(process.argv);
+    .option(
+      '--tools [regex]',
+      'regex to match tools to run',
+      arg => new RegExp(arg)
+    )
+    .option(
+      '--inputs [regex]',
+      'regex to match inputs to run',
+      arg => new RegExp(arg)
+    )
+    .parse(process.argv);
   const toolFilter = commander.tools;
   const inputFilter = commander.inputs;
 

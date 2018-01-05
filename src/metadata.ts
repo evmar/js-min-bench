@@ -35,7 +35,7 @@ export const js: {[name: string]: JSFileMetadata} = {
   },
   'angular-hello': {
     path: 'third_party/angular/main.js',
-    desc: 'angular5 + cli hello world',
+    desc: 'angular5 + cli hello world'
   },
   react: {
     path: 'third_party/react/react.production.min.js',

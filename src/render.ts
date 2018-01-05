@@ -121,12 +121,16 @@ function toolDetails(): string {
   html +=
     `<dt>raw</dt>` + `<dd>raw input file, as baseline for comparison</dd>`;
   for (const tool of metadata.tools.slice(1)) {
-    html += `<dt>${tool.id}</dt>` + `<dd>${tool.name}<br>` +
-       `<tt>$ ${tool.variants[0].command}</tt><br>`;
+    html +=
+      `<dt>${tool.id}</dt>` +
+      `<dd>${tool.name}<br>` +
+      `<tt>$ ${tool.variants[0].command}</tt><br>`;
     if (tool.variants.length > 1) {
       html += `<dl>`;
       for (const variant of tool.variants.slice(1)) {
-        html += `<dt>${variant.id}</dt><dd><tt>$ ${variant.command}</tt></dd>\n`;
+        html += `<dt>${variant.id}</dt><dd><tt>$ ${
+          variant.command
+        }</tt></dd>\n`;
       }
       html += `</dl>`;
     }
