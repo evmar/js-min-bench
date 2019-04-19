@@ -105,7 +105,7 @@ async function main() {
           time: 0,
           size: 0,
           gzSize: 0,
-          brSize: 0,
+          brSize: 0
         };
 
         const start = Date.now();

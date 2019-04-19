@@ -17,7 +17,25 @@ describe('todomvc', () => {
     await browser.close();
   });
 
-  it('loads', async () => {
-    expect(await page.title()).to.contain('TodoMVC');
+  describe('initial state', () => {
+    it('loads', async () => {
+      expect(await page.title()).contain('TodoMVC');
+    });
+    it('focuses input', async () => {
+      expect(
+        await page.$eval(
+          'input.new-todo',
+          input => input && input === document.activeElement
+        )
+      ).true;
+    });
+  });
+
+  describe('no todos', () => {
+    it('hides everything', async () => {
+      const main = await page.$('.main');
+      if (!main) return; // ok
+      expect(await page.$$('ul.todo-list li')).empty;
+    });
   });
 });
