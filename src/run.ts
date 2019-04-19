@@ -97,24 +97,28 @@ async function main() {
         const cmd = command
           .replace('%%in%%', inputPath)
           .replace('%%out%%', out);
+
+        const result: Result = {
+          input,
+          tool,
+          variant,
+          time: 0,
+          size: 0,
+          gzSize: 0,
+          brSize: 0,
+        };
+
         const start = Date.now();
         try {
           exec(cmd);
         } catch (e) {
           const end = Date.now();
-          results.push({
-            input,
-            tool,
-            variant,
-            time: end - start,
-            size: 0,
-            gzSize: 0,
-            brSize: 0,
-            failed: true
-          });
+          result.time = Date.now() - start;
+          result.failure = e.toString();
+          results.push(result);
           continue;
         }
-        const time = Date.now() - start;
+        result.time = Date.now() - start;
 
         if (test) {
           const mocha = new Mocha();
@@ -125,27 +129,23 @@ async function main() {
               resolve(failures);
             });
           });
-          console.log('run result', failures);
+          if (failures > 0) {
+            result.failure = 'test failure';
+            results.push(result);
+            continue;
+          }
         } else {
           // TODO: include this warning in the output.
           console.warn('warning: no test');
         }
 
-        const size = fs.statSync(out).size;
+        result.size = fs.statSync(out).size;
         gzip(out);
-        const gzSize = fs.statSync(`${out}.gz`).size;
+        result.gzSize = fs.statSync(`${out}.gz`).size;
         brotli(out);
-        const brSize = fs.statSync(`${out}.br`).size;
+        result.brSize = fs.statSync(`${out}.br`).size;
 
-        results.push({
-          input,
-          tool,
-          variant,
-          time,
-          size,
-          gzSize,
-          brSize
-        });
+        results.push(result);
       }
     }
   }

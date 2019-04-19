@@ -18,6 +18,6 @@ describe('todomvc', () => {
   });
 
   it('loads', async () => {
-    expect(await page.title()).to.equal('VanillaJS • TodoMVC');
+    expect(await page.title()).to.contain('TodoMVC');
   });
 });

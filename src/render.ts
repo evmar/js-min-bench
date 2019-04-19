@@ -59,7 +59,7 @@ function resultsTable(allResults: Result[]): string {
   html += `<tr><th>input+tool+variant</th><th>size</th><th></th><th>gzip</th><th></th><th>brotli</th><th></th><th>runtime</th></tr>\n`;
   for (const [input, results] of rollup(allResults, 'input').entries()) {
     html += `<tr><td>${input}</td></tr>`;
-    const candidates = results.slice(1).filter(r => !r.failed);
+    const candidates = results.slice(1).filter(r => !r.failure);
     const bestSize = min(
       ([] as number[]).concat(
         ...candidates.map(c => [c.size, c.gzSize, c.brSize])
@@ -76,12 +76,12 @@ function resultsTable(allResults: Result[]): string {
         html += `<td style='padding-left: 8ex'>+ ${result.variant}</td>`;
       }
 
-      if (!result.failed) {
+      if (!result.failure) {
         html += sizeCells(result.size, bestSize);
         html += sizeCells(result.gzSize, bestSize);
         html += sizeCells(result.brSize, bestSize);
       } else {
-        html += `<td colspan=6 align=center>failed</td>`;
+        html += `<td colspan=6 align=center>failed: ${result.failure}</td>`;
       }
 
       if (result === results[0]) {

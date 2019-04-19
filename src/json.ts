@@ -22,5 +22,5 @@ export interface Result {
   size: number;
   gzSize: number;
   brSize: number;
-  failed?: boolean;
+  failure?: string;
 }
