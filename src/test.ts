@@ -1,13 +1,23 @@
+import {expect} from 'chai';
 import * as puppeteer from 'puppeteer';
 
-async function main() {
-    const browser = await puppeteer.launch({headless: false});
-    const page = await browser.newPage();
-    await page.goto('http://localhost:9000');
-    await browser.close();
-}
+const debug = false;
 
-main().catch((err) => {
-    console.error('XXX', err);
-    process.exitCode = 1;
+describe('todomvc', () => {
+    let browser: puppeteer.Browser;
+    let page: puppeteer.Page;
+
+    before(async () => {
+        browser = await puppeteer.launch({headless: !debug});
+        page = await browser.newPage();
+        await page.goto('http://localhost:9000');
+    });
+
+    after(async() => {
+        await browser.close();
+    });
+
+    it('loads', async () => {
+        expect(await page.title()).to.equal('VanillaJS • TodoMVC');
+    })
 });
