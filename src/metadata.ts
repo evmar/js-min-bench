@@ -35,7 +35,8 @@ export const js: {[name: string]: JSFileMetadata} = {
   },
   'angular-hello': {
     path: 'third_party/angular/main.js',
-    desc: 'angular5 + cli hello world ' +
+    desc:
+      'angular5 + cli hello world ' +
       '(note: <a href="https://github.com/angular/closure-demo">closure-optimized build</a> is much smaller)'
   },
   react: {

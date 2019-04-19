@@ -1,7 +1,7 @@
 # todomvc
 
 [todomvc](https://github.com/tastejs/todomvc) is the same todo app implemented
-in a bunch of different frameworks.  js-min-bench runs these apps to verify
+in a bunch of different frameworks. js-min-bench runs these apps to verify
 whehter a given minified JS bundle breaks the app or not.
 
 ## Relation to upstream
@@ -19,4 +19,3 @@ $ git subtree add -P third_party/todomvc/vanillajs todomvc-vanillajs --squash
 ```
 
 They were then modified by hand to use a single bundle for their JS.
-
