@@ -19,6 +19,7 @@ export interface JSFileMetadata {
   desc: string;
   version?: string;
   transform?: string;
+  test?: string;
 }
 export const js: {[name: string]: JSFileMetadata} = {
   angularjs: {
@@ -51,6 +52,11 @@ export const js: {[name: string]: JSFileMetadata} = {
     path: 'third_party/vue/vue.js',
     desc: 'vue.js 2.5.3',
     version: '2.5.3'
+  },
+  'todomvc-vanillajs': {
+    path: 'third_party/todomvc/vanillajs/bundle.js',
+    desc: 'todomvc vanillajs',
+    test: 'build/test.js'
   }
 };
 

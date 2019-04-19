@@ -19,6 +19,7 @@ import * as childProcess from 'child_process';
 import {Result} from './json';
 import * as metadata from './metadata';
 import * as commander from 'commander';
+import * as Mocha from 'mocha';
 
 function exec(cmd: string) {
   childProcess.execSync(cmd, {stdio: 'inherit'});
@@ -50,7 +51,7 @@ function gen10xAngular(path: string): string {
   return outPath;
 }
 
-function main() {
+async function main() {
   commander
     .option(
       '--tools [regex]',
@@ -78,7 +79,7 @@ function main() {
   let results: Result[] = [];
   for (const input of inputs) {
     if (inputFilter && !inputFilter.test(input)) continue;
-    const {path, transform} = metadata.js[input];
+    const {path, transform, test} = metadata.js[input];
     let inputPath = path;
     if (transform) {
       if (transform === 'angularjs 10x') {
@@ -92,13 +93,15 @@ function main() {
         const toolVariant = tool + (variant ? `-${variant}` : '');
         if (toolFilter && !toolFilter.test(toolVariant)) continue;
         console.log(`${input} ${toolVariant}`);
-        let out = `out/${input}.${toolVariant}`;
-        let cmd = command.replace('%%in%%', inputPath).replace('%%out%%', out);
-        let start = Date.now();
+        const out = `out/${input}.${toolVariant}`;
+        const cmd = command
+          .replace('%%in%%', inputPath)
+          .replace('%%out%%', out);
+        const start = Date.now();
         try {
           exec(cmd);
         } catch (e) {
-          let end = Date.now();
+          const end = Date.now();
           results.push({
             input,
             tool,
@@ -111,18 +114,34 @@ function main() {
           });
           continue;
         }
-        let end = Date.now();
-        let size = fs.statSync(out).size;
+        const time = Date.now() - start;
+
+        if (test) {
+          const mocha = new Mocha();
+          mocha.addFile(test);
+          mocha.reporter('progress');
+          const failures = await new Promise((resolve, reject) => {
+            mocha.run(failures => {
+              resolve(failures);
+            });
+          });
+          console.log('run result', failures);
+        } else {
+          // TODO: include this warning in the output.
+          console.warn('warning: no test');
+        }
+
+        const size = fs.statSync(out).size;
         gzip(out);
-        let gzSize = fs.statSync(`${out}.gz`).size;
+        const gzSize = fs.statSync(`${out}.gz`).size;
         brotli(out);
-        let brSize = fs.statSync(`${out}.br`).size;
+        const brSize = fs.statSync(`${out}.br`).size;
 
         results.push({
           input,
           tool,
           variant,
-          time: end - start,
+          time,
           size,
           gzSize,
           brSize
@@ -134,4 +153,7 @@ function main() {
   summarize(results);
 }
 
-main();
+main().catch(err => {
+  console.error(err);
+  process.exitCode = 1;
+});
