@@ -34,8 +34,8 @@ describe('todomvc', () => {
   describe('no todos', () => {
     it('hides everything', async () => {
       const main = await page.$('.main');
-      if (!main) return; // ok
-      expect(await page.$$('ul.todo-list li')).empty;
+      if (!main) expect(await page.$$('ul.todo-list li')).empty;
+      await page.waitForSelector('footer', {visible: false});
     });
   });
 });
