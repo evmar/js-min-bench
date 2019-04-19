@@ -6,10 +6,12 @@
   "dependencies": {
     "commander": "^2.12.2",
     "google-closure-compiler": "^20171203.0.0",
+    "puppeteer": "^1.14.0",
     "uglify-js": "^3.2.2"
   },
   "devDependencies": {
     "@types/node": "^8.0.58",
+    "@types/puppeteer": "^1.12.3",
     "prettier": "1.9.2",
     "typescript": "^2.6.2"
   },
