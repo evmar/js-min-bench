@@ -18,4 +18,25 @@ $ git checkout master
 $ git subtree add -P third_party/todomvc/vanillajs todomvc-vanillajs --squash
 ```
 
-They were then modified by hand to use a single bundle for their JS.
+They were then modified by hand to use a single bundle for their JS, as
+described in the following sections.
+
+### vanillajs
+
+The scripts were concatenated with 'cat' and the HTML file changed to use it.
+
+A command like this extracts all of the source scripts in order:
+
+```sh
+$ cat $(sed -ne 's/.*script src="\(.*\)".*/\1/p' index.html) > bundle.js
+```
+
+### react
+
+The jsx was manually transpiled to js via
+
+```sh
+$ path/to/tsc --jsx react -t es2017 --allowjs *.jsx
+```
+
+then the scripts were concatenated as in vanillajs.
