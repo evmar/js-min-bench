@@ -22,6 +22,17 @@ import * as commander from 'commander';
 import * as Mocha from 'mocha';
 import { WebServer } from './web_server';
 
+/**
+ * The mocha typings are missing the 'unloadFiles' method,
+ * which is needed so we can run the same test suite against multiple
+ * different bundle configurations.
+ */
+declare global {
+  interface Mocha {
+    unloadFiles(): void;
+  }
+}
+
 function exec(cmd: string) {
   childProcess.execSync(cmd, {stdio: 'inherit'});
 }
@@ -124,6 +135,7 @@ async function main() {
         if (test) {
           const server = new WebServer(test.webroot);
           const port = 9000;
+          server.remaps.set('/bundle.js', out);
           await server.run(port);
 
           const mocha = new Mocha();
@@ -134,6 +146,7 @@ async function main() {
               resolve(failures);
             });
           });
+          mocha.unloadFiles();
           await server.stop();
           if (failures > 0) {
             result.failure = 'test failure';

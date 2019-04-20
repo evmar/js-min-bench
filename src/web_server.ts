@@ -6,7 +6,7 @@ import * as path from 'path';
 export class WebServer {
   server = http.createServer(this.handler.bind(this));
   listening: Promise<void> = new Promise((resolve) => {
-    this.server.on('listening', () => { console.log('listening'); resolve(); });
+    this.server.on('listening', () => { resolve(); });
   });
   remaps = new Map<string, string>();
 
