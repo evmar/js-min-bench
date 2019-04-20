@@ -33,23 +33,19 @@ function rollup<T, K extends keyof T>(data: T[], key: K): Map<T[K], T[]> {
 }
 
 function min(data: number[]): number {
-  let best = data[0];
-  for (let d of data) {
-    if (d < best) best = d;
-  }
-  return best;
+  return data.reduce((a, b) => Math.min(a, b));
 }
 
-function mult(n: number, base: number): string {
-  return (n / base).toFixed(1) + 'x';
+function max(data: number[]): number {
+  return data.reduce((a, b) => Math.max(a, b));
 }
 
-function sizeCells(size: number, bestSize: number): string {
+function sizeCells(size: number, bestSize: number, worstSize: number): string {
   const best = size === bestSize ? ' class=best' : '';
   return (
     `<td align=right${best}>${size.toLocaleString()}</td>` +
     `<td align=right${best}>${
-      size == bestSize ? '' : mult(size, bestSize)
+      size === worstSize ? '' : (size * 100 / worstSize).toFixed(1) + '%'
     }</td>`
   );
 }
@@ -60,11 +56,11 @@ function resultsTable(allResults: Result[]): string {
   for (const [input, results] of rollup(allResults, 'input').entries()) {
     html += `<tr><td>${input}</td></tr>`;
     const candidates = results.filter(r => !r.failure);
-    const bestSize = min(
-      ([] as number[]).concat(
-        ...candidates.map(c => [c.size, c.gzSize, c.brSize])
-      )
+    const sizes = ([] as number[]).concat(
+      ...candidates.map(c => [c.size, c.gzSize, c.brSize])
     );
+    const bestSize = min(sizes);
+    const worstSize = max(sizes);
     const bestTime = min(
       candidates.filter(r => r.tool !== 'raw').map(r => r.time)
     );
@@ -79,9 +75,9 @@ function resultsTable(allResults: Result[]): string {
       }
 
       if (!result.failure) {
-        html += sizeCells(result.size, bestSize);
-        html += sizeCells(result.gzSize, bestSize);
-        html += sizeCells(result.brSize, bestSize);
+        html += sizeCells(result.size, bestSize, worstSize);
+        html += sizeCells(result.gzSize, bestSize, worstSize);
+        html += sizeCells(result.brSize, bestSize, worstSize);
       } else {
         html += `<td colspan=6 align=center title='${
           result.failure
