@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+const closureFlags = [
+  '--jscomp_off=checkVars',
+  '--warning_level=QUIET',
+  '--language_out=ECMASCRIPT_2015'
+].join(' ');
+
 export interface JSFileMetadata {
   path: string;
   desc: string;
@@ -110,14 +116,12 @@ export const tools: ToolMetadata[] = [
       "<a href='https://developers.google.com/closure/compiler/'>Google Closure Compiler</a> 20171203",
     variants: [
       {
-        command:
-          'java -jar node_modules/google-closure-compiler/compiler.jar --jscomp_off=checkVars --warning_level=QUIET --js_output_file=%%out%% %%in%%'
+        command: `java -jar node_modules/google-closure-compiler/compiler.jar ${closureFlags} --js_output_file=%%out%% %%in%%`
       },
       {
         id: 'advanced',
         desc: 'advanced mode + externs',
-        command:
-          'java -jar node_modules/google-closure-compiler/compiler.jar --jscomp_off=checkVars --warning_level=QUIET -O advanced third_party/externs.js %%externs%% --js_output_file=%%out%% %%in%%'
+        command: `java -jar node_modules/google-closure-compiler/compiler.jar ${closureFlags} -O advanced third_party/externs.js %%externs%% --js_output_file=%%out%% %%in%%`
       }
     ]
   },
