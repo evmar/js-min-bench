@@ -95,7 +95,7 @@ async function main() {
   let results: Result[] = [];
   for (const input of inputs) {
     if (inputFilter && !inputFilter.test(input)) continue;
-    const {path, transform, test} = metadata.js[input];
+    const {path, transform, test, externs} = metadata.js[input];
     let inputPath = path;
     if (transform) {
       if (transform === 'angularjs 10x') {
@@ -112,7 +112,8 @@ async function main() {
         const out = `out/${input}.${toolVariant}`;
         const cmd = command
           .replace('%%in%%', inputPath)
-          .replace('%%out%%', out);
+          .replace('%%out%%', out)
+          .replace('%%externs%%', externs || '');
 
         const result: Result = {
           input,

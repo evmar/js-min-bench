@@ -19,6 +19,7 @@ export interface JSFileMetadata {
   desc: string;
   version?: string;
   transform?: string;
+  externs?: string;
   test?: {
     webroot: string;
     test: string;
@@ -58,6 +59,7 @@ export const js: {[name: string]: JSFileMetadata} = {
   },
   'todomvc-vanillajs': {
     path: 'third_party/todomvc/vanillajs/bundle.js',
+    externs: 'third_party/todomvc/externs.js',
     desc: 'todomvc vanillajs',
     test: {
       webroot: 'third_party/todomvc/vanillajs',
@@ -115,7 +117,7 @@ export const tools: ToolMetadata[] = [
         id: 'advanced',
         desc: 'advanced mode + externs',
         command:
-          'java -jar node_modules/google-closure-compiler/compiler.jar --jscomp_off=checkVars --warning_level=QUIET -O advanced third_party/externs.js --js_output_file=%%out%% %%in%%'
+          'java -jar node_modules/google-closure-compiler/compiler.jar --jscomp_off=checkVars --warning_level=QUIET -O advanced third_party/externs.js %%externs%% --js_output_file=%%out%% %%in%%'
       }
     ]
   },
