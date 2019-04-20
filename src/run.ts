@@ -75,6 +75,10 @@ async function main() {
       'regex to match inputs to run',
       arg => new RegExp(arg)
     )
+    .option(
+      '--no-tests',
+      'skip running tests'
+    )
     .parse(process.argv);
   const toolFilter = commander.tools;
   const inputFilter = commander.inputs;
@@ -132,7 +136,7 @@ async function main() {
         }
         result.time = Date.now() - start;
 
-        if (test) {
+        if (commander.tests && test) {
           const server = new WebServer(test.webroot);
           const port = 9000;
           server.remaps.set('/bundle.js', out);
