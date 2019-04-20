@@ -81,7 +81,7 @@ function resultsTable(allResults: Result[]): string {
         html += sizeCells(result.gzSize, bestSize);
         html += sizeCells(result.brSize, bestSize);
       } else {
-        html += `<td colspan=6 align=center>failed: ${result.failure}</td>`;
+        html += `<td colspan=6 align=center title='${result.failure}'>failed (hover for details)</td>`;
       }
 
       if (result === results[0]) {
