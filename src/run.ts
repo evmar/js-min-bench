@@ -75,10 +75,7 @@ async function main() {
       'regex to match inputs to run',
       arg => new RegExp(arg)
     )
-    .option(
-      '--no-tests',
-      'skip running tests'
-    )
+    .option('--no-tests', 'skip running tests')
     .parse(process.argv);
   const toolFilter = commander.tools;
   const inputFilter = commander.inputs;

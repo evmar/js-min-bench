@@ -57,10 +57,7 @@ export class WebServer {
 
 if (require.main === module) {
   commander
-    .option(
-      '--remap <urlpath=filepath>',
-      'remap request path',
-    )
+    .option('--remap <urlpath=filepath>', 'remap request path')
     .parse(process.argv);
 
   const server = new WebServer('.');

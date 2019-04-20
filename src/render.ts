@@ -65,7 +65,9 @@ function resultsTable(allResults: Result[]): string {
         ...candidates.map(c => [c.size, c.gzSize, c.brSize])
       )
     );
-    const bestTime = min(candidates.filter(r => r.tool !== 'raw').map(r => r.time));
+    const bestTime = min(
+      candidates.filter(r => r.tool !== 'raw').map(r => r.time)
+    );
     let lastTool = '';
     for (const result of results) {
       html += `<tr>`;
