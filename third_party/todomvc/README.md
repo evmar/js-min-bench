@@ -13,7 +13,7 @@ They were imported via e.g.
 ```sh
 $ git remote add todomvc https://github.com/tastejs/todomvc.git
 $ git checkout -b todomvc todomvc/master
-$ git subtree -P examples/vanillajs -b todomvc-vanillajs
+$ git subtree split -P examples/vanillajs -b todomvc-vanillajs
 $ git checkout master
 $ git subtree add -P third_party/todomvc/vanillajs todomvc-vanillajs --squash
 ```
