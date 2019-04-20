@@ -56,7 +56,7 @@ export const js: {[name: string]: JSFileMetadata} = {
   'todomvc-vanillajs': {
     path: 'third_party/todomvc/vanillajs/bundle.js',
     desc: 'todomvc vanillajs',
-    test: 'build/test.js'
+    test: 'build/third_party/todomvc/test.js'
   }
 };
 
