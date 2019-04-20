@@ -59,13 +59,13 @@ function resultsTable(allResults: Result[]): string {
   html += `<tr><th>input+tool+variant</th><th>size</th><th></th><th>gzip</th><th></th><th>brotli</th><th></th><th>runtime</th></tr>\n`;
   for (const [input, results] of rollup(allResults, 'input').entries()) {
     html += `<tr><td>${input}</td></tr>`;
-    const candidates = results.slice(1).filter(r => !r.failure);
+    const candidates = results.filter(r => !r.failure);
     const bestSize = min(
       ([] as number[]).concat(
         ...candidates.map(c => [c.size, c.gzSize, c.brSize])
       )
     );
-    const bestTime = min(candidates.map(({time}) => time));
+    const bestTime = min(candidates.filter(r => r.tool !== 'raw').map(r => r.time));
     let lastTool = '';
     for (const result of results) {
       html += `<tr>`;
@@ -86,7 +86,7 @@ function resultsTable(allResults: Result[]): string {
         }'>failed (hover for details)</td>`;
       }
 
-      if (result === results[0]) {
+      if (result.tool === 'raw') {
         html += `<td></td>`;
       } else {
         let best = result.time === bestTime ? ' class=best' : '';

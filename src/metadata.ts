@@ -80,7 +80,6 @@ export interface ToolMetadata {
   variants: Array<{id?: string; desc?: string; command: string}>;
 }
 export const tools: ToolMetadata[] = [
-  // Note: code expects 'raw' to be first.
   {
     id: 'raw',
     name: 'baseline input file',
