@@ -53,3 +53,8 @@ export class WebServer {
     });
   }
 }
+
+if (require.main === module) {
+  new WebServer('.').run(9000);
+  console.log('listening on :9000');
+}
