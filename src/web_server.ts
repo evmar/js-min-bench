@@ -2,6 +2,7 @@ import * as http from 'http';
 import * as url from 'url';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as commander from 'commander';
 
 export class WebServer {
   server = http.createServer(this.handler.bind(this));
@@ -55,6 +56,18 @@ export class WebServer {
 }
 
 if (require.main === module) {
-  new WebServer('.').run(9000);
+  commander
+    .option(
+      '--remap <urlpath=filepath>',
+      'remap request path',
+    )
+    .parse(process.argv);
+
+  const server = new WebServer('.');
+  if (commander.remap) {
+    const [src, dst] = commander.remap.split('=');
+    server.remaps.set(src, dst);
+  }
+  server.run(9000);
   console.log('listening on :9000');
 }
