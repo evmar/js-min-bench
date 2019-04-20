@@ -21,11 +21,11 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "fmt": "prettier --write *.md src/*.ts third_party/**/*.md",
+    "fmt": "prettier --write *.md src/*.ts third_party/**/*.md third_party/*/test.ts",
     "watch": "tsc -w",
     "build": "tsc",
-    "render": "node build/render.js > index.html",
-    "bench": "node build/run.js && node build/render.js > index.html"
+    "render": "node build/src/render.js > index.html",
+    "bench": "node build/src/run.js && node build/src/render.js > index.html"
   },
   "author": "",
   "license": "Apache-2.0"

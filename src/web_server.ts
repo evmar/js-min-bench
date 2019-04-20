@@ -5,8 +5,10 @@ import * as path from 'path';
 
 export class WebServer {
   server = http.createServer(this.handler.bind(this));
-  listening: Promise<void> = new Promise((resolve) => {
-    this.server.on('listening', () => { resolve(); });
+  listening: Promise<void> = new Promise(resolve => {
+    this.server.on('listening', () => {
+      resolve();
+    });
   });
   remaps = new Map<string, string>();
 
@@ -44,9 +46,10 @@ export class WebServer {
   }
 
   stop(): Promise<void> {
-    return new Promise((resolve) => {
-      this.server.close(() => { resolve(); });
+    return new Promise(resolve => {
+      this.server.close(() => {
+        resolve();
+      });
     });
   }
 }
-

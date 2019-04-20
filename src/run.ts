@@ -20,7 +20,7 @@ import {Result} from './json';
 import * as metadata from './metadata';
 import * as commander from 'commander';
 import * as Mocha from 'mocha';
-import { WebServer } from './web_server';
+import {WebServer} from './web_server';
 
 /**
  * The mocha typings are missing the 'unloadFiles' method,
@@ -141,7 +141,7 @@ async function main() {
           const mocha = new Mocha();
           mocha.addFile(test.test);
           mocha.reporter('progress');
-          const failures = await new Promise((resolve) => {
+          const failures = await new Promise(resolve => {
             mocha.run(failures => {
               resolve(failures);
             });

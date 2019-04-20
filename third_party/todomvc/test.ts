@@ -12,7 +12,9 @@ async function getItems(page: puppeteer.Page) {
 
 /** Gets the completed state of the displayed todo items. */
 async function getItemsCompleted(page: puppeteer.Page) {
-  return await page.$$eval('ul.todo-list li', es => es.map(e => e.classList.contains('completed')));
+  return await page.$$eval('ul.todo-list li', es =>
+    es.map(e => e.classList.contains('completed'))
+  );
 }
 
 /** Gets the toggles of the displayed todo items. */
@@ -114,12 +116,15 @@ describe('todomvc', function() {
     });
   });
 
-  describe('mark all as completed', function () {
+  describe('mark all as completed', function() {
     async function clickToggleAll() {
       await page.$eval('input.toggle-all', t => (t as HTMLElement).click());
     }
     async function getToggleAllChecked() {
-      return await page.$eval('input.toggle-all', t => (t as HTMLInputElement).checked);
+      return await page.$eval(
+        'input.toggle-all',
+        t => (t as HTMLInputElement).checked
+      );
     }
 
     beforeEach(async function() {
@@ -128,12 +133,12 @@ describe('todomvc', function() {
       await addItem(page, 'three');
     });
 
-    it('marks all', async function () {
+    it('marks all', async function() {
       await clickToggleAll();
       expect(await getItemsCompleted(page)).eql([true, true, true]);
     });
 
-    it('should correctly update the complete all checked state', async function () {
+    it('should correctly update the complete all checked state', async function() {
       const toggles = await getItemsToggles(page);
       await page.evaluate(t => t.click(), toggles[0]);
       await page.evaluate(t => t.click(), toggles[1]);
@@ -142,13 +147,13 @@ describe('todomvc', function() {
       expect(await getToggleAllChecked()).true;
     });
 
-    it('should allow me to clear the completion state of all items', async function () {
+    it('should allow me to clear the completion state of all items', async function() {
       await clickToggleAll();
       await clickToggleAll();
       expect(await getItemsCompleted(page)).eql([false, false, false]);
     });
 
-    it('complete all checkbox should update state when items are completed / cleared', async function () {
+    it('complete all checkbox should update state when items are completed / cleared', async function() {
       await clickToggleAll();
       expect(await getToggleAllChecked()).true;
 
@@ -164,8 +169,8 @@ describe('todomvc', function() {
     });
   });
 
-  describe('items', function () {
-    it('can be set complete', async function () {
+  describe('items', function() {
+    it('can be set complete', async function() {
       await addItem(page, 'one');
       await addItem(page, 'two');
 
@@ -177,7 +182,7 @@ describe('todomvc', function() {
       expect(await getItemsCompleted(page)).eql([true, true]);
     });
 
-    it('can un-mark items', async function () {
+    it('can un-mark items', async function() {
       await addItem(page, 'one');
       await addItem(page, 'two');
 
@@ -190,8 +195,8 @@ describe('todomvc', function() {
     });
   });
 
-  describe('editing', function () {
-    beforeEach(async function () {
+  describe('editing', function() {
+    beforeEach(async function() {
       await addItem(page, 'one');
       // TODO: double click.
       // await page.$eval('ul.todo-list li', e => (e as HTMLElement).click();
@@ -199,5 +204,4 @@ describe('todomvc', function() {
 
     // TODO: more tests.
   });
-
 });

@@ -61,8 +61,8 @@ export const js: {[name: string]: JSFileMetadata} = {
     desc: 'todomvc vanillajs',
     test: {
       webroot: 'third_party/todomvc/vanillajs',
-      test: 'build/third_party/todomvc/test.js',
-    },
+      test: 'build/third_party/todomvc/test.js'
+    }
   }
 };
 
