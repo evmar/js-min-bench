@@ -16,7 +16,7 @@ async function getItemsCompleted(page: puppeteer.Page) {
 }
 
 /** Gets the toggles of the displayed todo items. */
-async function getItemsToggle(page: puppeteer.Page) {
+async function getItemsToggles(page: puppeteer.Page) {
   return await page.$$('ul.todo-list li input.toggle');
 }
 
@@ -86,7 +86,7 @@ describe('todomvc', function() {
     });
   });
 
-  describe('adding', function() {
+  describe('adding items', function() {
     it('adds items', async function() {
       await addItem(page, 'one');
       expect((await getItems(page)).length).equal(1);
@@ -97,7 +97,7 @@ describe('todomvc', function() {
       expect(text).eql(['one', 'two']);
     });
 
-    it('clears text input field when an item is added', async function() {
+    it('clears text input field', async function() {
       await addItem(page, 'one');
       expect(await page.$eval(newInputSelector, e => e.textContent)).equal('');
     });
@@ -107,7 +107,7 @@ describe('todomvc', function() {
       expect(await getItems(page)).eql(['one']);
     });
 
-    it('shows main and footer when items added', async function() {
+    it('shows main and footer after items added', async function() {
       await addItem(page, 'one');
       await isVisible(page, 'main', true);
       await isVisible(page, 'footer', true);
@@ -134,7 +134,7 @@ describe('todomvc', function() {
     });
 
     it('should correctly update the complete all checked state', async function () {
-      const toggles = await getItemsToggle(page);
+      const toggles = await getItemsToggles(page);
       await page.evaluate(t => t.click(), toggles[0]);
       await page.evaluate(t => t.click(), toggles[1]);
       await page.evaluate(t => t.click(), toggles[2]);
@@ -153,7 +153,7 @@ describe('todomvc', function() {
       expect(await getToggleAllChecked()).true;
 
       // Mark one not complete.
-      const toggles = await getItemsToggle(page);
+      const toggles = await getItemsToggles(page);
       expect(await getToggleAllChecked()).true;
       await page.evaluate(t => t.click(), toggles[0]);
       expect(await getToggleAllChecked()).false;
@@ -163,4 +163,32 @@ describe('todomvc', function() {
       expect(await getToggleAllChecked()).true;
     });
   });
+
+  describe('items', function () {
+    it('can be set complete', async function () {
+      await addItem(page, 'one');
+      await addItem(page, 'two');
+
+      const toggles = await getItemsToggles(page);
+      await page.evaluate(t => t.click(), toggles[0]);
+      expect(await getItemsCompleted(page)).eql([true, false]);
+
+      await page.evaluate(t => t.click(), toggles[1]);
+      expect(await getItemsCompleted(page)).eql([true, true]);
+    });
+
+    it('can un-mark items', async function () {
+      await addItem(page, 'one');
+      await addItem(page, 'two');
+
+      const toggles = await getItemsToggles(page);
+      await page.evaluate(t => t.click(), toggles[0]);
+      expect(await getItemsCompleted(page)).eql([true, false]);
+
+      await page.evaluate(t => t.click(), toggles[0]);
+      expect(await getItemsCompleted(page)).eql([false, false]);
+    });
+
+  });
+
 });
