@@ -188,7 +188,16 @@ describe('todomvc', function() {
       await page.evaluate(t => t.click(), toggles[0]);
       expect(await getItemsCompleted(page)).eql([false, false]);
     });
+  });
 
+  describe('editing', function () {
+    beforeEach(async function () {
+      await addItem(page, 'one');
+      // TODO: double click.
+      // await page.$eval('ul.todo-list li', e => (e as HTMLElement).click();
+    });
+
+    // TODO: more tests.
   });
 
 });
