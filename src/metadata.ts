@@ -19,7 +19,10 @@ export interface JSFileMetadata {
   desc: string;
   version?: string;
   transform?: string;
-  test?: string;
+  test?: {
+    webroot: string;
+    test: string;
+  };
 }
 export const js: {[name: string]: JSFileMetadata} = {
   angularjs: {
@@ -56,7 +59,10 @@ export const js: {[name: string]: JSFileMetadata} = {
   'todomvc-vanillajs': {
     path: 'third_party/todomvc/vanillajs/bundle.js',
     desc: 'todomvc vanillajs',
-    test: 'build/third_party/todomvc/test.js'
+    test: {
+      webroot: 'third_party/todomvc/vanillajs',
+      test: 'build/third_party/todomvc/test.js',
+    },
   }
 };
 

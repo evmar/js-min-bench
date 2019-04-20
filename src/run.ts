@@ -20,6 +20,7 @@ import {Result} from './json';
 import * as metadata from './metadata';
 import * as commander from 'commander';
 import * as Mocha from 'mocha';
+import { WebServer } from './web_server';
 
 function exec(cmd: string) {
   childProcess.execSync(cmd, {stdio: 'inherit'});
@@ -121,14 +122,19 @@ async function main() {
         result.time = Date.now() - start;
 
         if (test) {
+          const server = new WebServer(test.webroot);
+          const port = 9000;
+          await server.run(port);
+
           const mocha = new Mocha();
-          mocha.addFile(test);
+          mocha.addFile(test.test);
           mocha.reporter('progress');
-          const failures = await new Promise((resolve, reject) => {
+          const failures = await new Promise((resolve) => {
             mocha.run(failures => {
               resolve(failures);
             });
           });
+          await server.stop();
           if (failures > 0) {
             result.failure = 'test failure';
             results.push(result);
