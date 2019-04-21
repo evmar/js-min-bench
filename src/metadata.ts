@@ -65,7 +65,7 @@ export const js: {[name: string]: JSFileMetadata} = {
   },
   'todomvc-vanillajs': {
     path: 'third_party/todomvc/vanillajs/bundle.js',
-    externs: 'third_party/todomvc/externs.js',
+    externs: 'third_party/todomvc/vanillajs/externs.js',
     desc: 'todomvc vanillajs',
     test: {
       webroot: 'third_party/todomvc/vanillajs',
@@ -74,6 +74,7 @@ export const js: {[name: string]: JSFileMetadata} = {
   },
   'todomvc-react': {
     path: 'third_party/todomvc/react/bundle.js',
+    externs: 'third_party/todomvc/react/externs.js',
     desc: 'todomvc react',
     test: {
       webroot: 'third_party/todomvc/react',
