@@ -116,6 +116,11 @@ function inputDetails(): string {
   return html;
 }
 
+/** Redacts "/home/username/.../ bit from a command line. */
+function redactCommand(cmd: string): string {
+  return cmd.replace(/^.*\/js-min-bench\//, '');
+}
+
 function toolDetails(): string {
   let html = '<dl>';
   html +=
@@ -124,13 +129,13 @@ function toolDetails(): string {
     html +=
       `<dt>${tool.id}</dt>` +
       `<dd>${tool.name}<br>` +
-      `<tt>$ ${tool.variants[0].command}</tt><br>`;
+      `<tt>$ ${redactCommand(tool.variants[0].command)}</tt><br>`;
     if (tool.variants.length > 1) {
       html += `<dl>`;
       for (const variant of tool.variants.slice(1)) {
-        html += `<dt>${variant.id}</dt><dd><tt>$ ${
-          variant.command
-        }</tt></dd>\n`;
+        html +=
+          `<dt>${variant.id}</dt>` +
+          `<dd><tt>$ ${redactCommand(variant.command)}</tt></dd>\n`;
       }
       html += `</dl>`;
     }

@@ -18,7 +18,10 @@
 // maybe there's a better way to reuse it?
 
 function getClosurePath(): string {
-  const module = process.platform === 'darwin' ? 'google-closure-compiler-osx' : 'google-closure-compiler-linux';
+  const module =
+    process.platform === 'darwin'
+      ? 'google-closure-compiler-osx'
+      : 'google-closure-compiler-linux';
   return require(module);
 }
 
