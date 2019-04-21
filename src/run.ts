@@ -153,6 +153,7 @@ async function main() {
           if (failures > 0) {
             result.failure = 'test failure';
             results.push(result);
+            console.warn(`run test manually via\n$ ${server.cmdline()}`);
             continue;
           }
         } else {

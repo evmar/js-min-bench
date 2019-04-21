@@ -53,14 +53,23 @@ export class WebServer {
       });
     });
   }
+
+  cmdline(): string {
+    let cmd = `node build/src/web_server.js --root=${this.root}`;
+    for (const [src, dst] of this.remaps) {
+      cmd += ` --remap=${src}=${dst}`;
+    }
+    return cmd;
+  }
 }
 
 if (require.main === module) {
   commander
+    .option('--root <path>', 'root dir to serve')
     .option('--remap <urlpath=filepath>', 'remap request path')
     .parse(process.argv);
 
-  const server = new WebServer('.');
+  const server = new WebServer(commander.root || '.');
   if (commander.remap) {
     const [src, dst] = commander.remap.split('=');
     server.remaps.set(src, dst);
