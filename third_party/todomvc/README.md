@@ -40,3 +40,8 @@ $ path/to/tsc --jsx react -t es2017 --allowjs *.jsx
 ```
 
 then the scripts were concatenated as in vanillajs.
+
+I manually deleted a line containing `@nosideeffects` to fix Closure
+compilation. It appears
+[this was removed in upstream React a while ago](https://github.com/facebook/react/pull/8882),
+but maybe the todomvc version of React is older than that?
