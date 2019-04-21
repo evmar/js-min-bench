@@ -14,7 +14,16 @@
  * limitations under the License.
  */
 
-const closureFlags = [
+// TODO: this duplicates some logic from google-closure-compiler npm package,
+// maybe there's a better way to reuse it?
+
+function getClosurePath(): string {
+  const module = process.platform === 'darwin' ? 'google-closure-compiler-osx' : 'google-closure-compiler-linux';
+  return require(module);
+}
+
+const closureCommand = [
+  getClosurePath(),
   '--jscomp_off=checkVars',
   '--warning_level=QUIET',
   '--language_out=ECMASCRIPT_2015'
@@ -114,15 +123,15 @@ export const tools: ToolMetadata[] = [
   {
     id: 'closure',
     name:
-      "<a href='https://developers.google.com/closure/compiler/'>Google Closure Compiler</a> 20171203",
+      "<a href='https://developers.google.com/closure/compiler/'>Google Closure Compiler</a> 20190415",
     variants: [
       {
-        command: `java -jar node_modules/google-closure-compiler/compiler.jar ${closureFlags} --js_output_file=%%out%% %%in%%`
+        command: `${closureCommand} --js_output_file=%%out%% %%in%%`
       },
       {
         id: 'advanced',
         desc: 'advanced mode + externs',
-        command: `java -jar node_modules/google-closure-compiler/compiler.jar ${closureFlags} -O advanced third_party/externs.js %%externs%% --js_output_file=%%out%% %%in%%`
+        command: `${closureCommand} -O advanced third_party/externs.js %%externs%% --js_output_file=%%out%% %%in%%`
       }
     ]
   },
