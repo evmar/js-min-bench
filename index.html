@@ -10,6 +10,10 @@
       margin: auto;
     }
 
+    p {
+      max-width: 80ex;
+    }
+
     h1,
     h2 {
       font-weight: normal;
@@ -17,6 +21,12 @@
 
     tt {
       font-family: monospace, WebKitWorkaround;
+    }
+
+    .note {
+      background: #fee;
+      border: solid 1px #fcc;
+      padding: 1ex 1.5ex;
     }
 
     table {
@@ -35,6 +45,11 @@
     .best {
       background: #dfd;
     }
+
+    #results a {
+      color: inherit;
+      text-decoration: inherit;
+    }
   </style>
 </head>
 
@@ -42,9 +57,11 @@
   <h1>js-min-bench minifier comparison</h1>
   <p>
     This page compares JavaScript minifiers across various settings and for various
-    inputs. Note that the input programs are not comparable against one another
-    because they do wildly different things -- e.g. don't compare "angularjs"
-    vs "react" -- but rather for a given input program compare the different
+    inputs.
+  </p>
+  <p class='note'>Note: the input programs are not comparable against one another
+    because they do wildly different things. So don't compare "angularjs"
+    vs "react", but rather for a given input program compare the different
     minifiers (uglify vs closure etc.).
   </p>
   <p>
@@ -53,54 +70,52 @@
     details about what these numbers are.
   </p>
 
-  <h2>test results</h2>
-  <table><tr><th>input+tool+variant</th><th>size</th><th></th><th>gzip</th><th></th><th>brotli</th><th></th><th>runtime</th></tr>
-<tr><td>angular-hello</td></tr><tr><td style='padding-left: 4ex'>raw</td><td align=right>1,246,962</td><td align=right></td><td align=right>226,378</td><td align=right>18.2%</td><td align=right>198,552</td><td align=right>15.9%</td><td></td><tr><td style='padding-left: 4ex'>uglify</td><td align=right>500,986</td><td align=right>40.2%</td><td align=right>112,152</td><td align=right>9.0%</td><td align=right>102,981</td><td align=right>8.3%</td><td align=right class=best>0.8s</td></tr>
+  <section id='results'>
+    <h2><a class='stealth' href='#results' name='results'>test results</a></h2>
+    <table><tr><th>input+tool+variant</th><th>size</th><th></th><th><a href='#gzip'>gzip</a></th><th></th><th><a href='#brotli'>brotli</a></th><th></th><th><a href='#runtime'>runtime</a></th></tr>
+<tr><td><a href='https://github.com/evmar/js-min-bench/tree/master/third_party/angular/README.md'>angular-hello</a></td></tr><tr><td style='padding-left: 4ex'>raw</td><td align=right>1,246,962</td><td align=right></td><td align=right>226,378</td><td align=right>18.2%</td><td align=right>198,552</td><td align=right>15.9%</td><td></td><tr><td style='padding-left: 4ex'>uglify</td><td align=right>500,986</td><td align=right>40.2%</td><td align=right>112,152</td><td align=right>9.0%</td><td align=right>102,981</td><td align=right>8.3%</td><td align=right class=best>0.8s</td></tr>
 <tr><td style='padding-left: 8ex'>+ compress-mangle</td><td align=right>215,400</td><td align=right>17.3%</td><td align=right>62,525</td><td align=right>5.0%</td><td align=right class=best>58,300</td><td align=right class=best>4.7%</td><td align=right>4.2s</td></tr>
 <tr><td style='padding-left: 4ex'>closure</td><td align=right>273,564</td><td align=right>21.9%</td><td align=right>80,609</td><td align=right>6.5%</td><td align=right>75,402</td><td align=right>6.0%</td><td align=right>3.3s</td></tr>
 <tr><td style='padding-left: 8ex'>+ advanced</td><td align=right>221,011</td><td align=right>17.7%</td><td align=right>73,636</td><td align=right>5.9%</td><td align=right>69,853</td><td align=right>5.6%</td><td align=right>4.0s</td></tr>
 <tr><td style='padding-left: 4ex'>j8t</td><td colspan=6 align=center title='Error: Command failed: ../j8t/target/release/j8t third_party/angular/main.js > out/angular-hello.j8t'>failed (hover for details)</td><td align=right>0.0s</td></tr>
-<tr><td>angularjs</td></tr><tr><td style='padding-left: 4ex'>raw</td><td align=right>1,270,821</td><td align=right></td><td align=right>309,875</td><td align=right>24.4%</td><td align=right>267,370</td><td align=right>21.0%</td><td></td><tr><td style='padding-left: 4ex'>uglify</td><td align=right>323,820</td><td align=right>25.5%</td><td align=right>83,243</td><td align=right>6.6%</td><td align=right>77,367</td><td align=right>6.1%</td><td align=right class=best>0.8s</td></tr>
+<tr><td><a href='https://github.com/evmar/js-min-bench/tree/master/third_party/angularjs/README.md'>angularjs</a></td></tr><tr><td style='padding-left: 4ex'>raw</td><td align=right>1,270,821</td><td align=right></td><td align=right>309,875</td><td align=right>24.4%</td><td align=right>267,370</td><td align=right>21.0%</td><td></td><tr><td style='padding-left: 4ex'>uglify</td><td align=right>323,820</td><td align=right>25.5%</td><td align=right>83,243</td><td align=right>6.6%</td><td align=right>77,367</td><td align=right>6.1%</td><td align=right class=best>0.8s</td></tr>
 <tr><td style='padding-left: 8ex'>+ compress-mangle</td><td align=right>175,751</td><td align=right>13.8%</td><td align=right>60,823</td><td align=right>4.8%</td><td align=right>57,219</td><td align=right>4.5%</td><td align=right>3.5s</td></tr>
 <tr><td style='padding-left: 4ex'>closure</td><td align=right>176,717</td><td align=right>13.9%</td><td align=right>62,088</td><td align=right>4.9%</td><td align=right>58,548</td><td align=right>4.6%</td><td align=right>2.9s</td></tr>
 <tr><td style='padding-left: 8ex'>+ advanced</td><td align=right>149,009</td><td align=right>11.7%</td><td align=right>59,446</td><td align=right>4.7%</td><td align=right class=best>56,783</td><td align=right class=best>4.5%</td><td align=right>3.8s</td></tr>
 <tr><td style='padding-left: 4ex'>j8t</td><td colspan=6 align=center title='Error: Command failed: ../j8t/target/release/j8t third_party/angularjs/angular.js > out/angularjs.j8t'>failed (hover for details)</td><td align=right>0.0s</td></tr>
-<tr><td>fake-10mb-angular</td></tr><tr><td style='padding-left: 4ex'>raw</td><td align=right>10,166,568</td><td align=right></td><td align=right>2,475,364</td><td align=right>24.3%</td><td align=right>267,380</td><td align=right>2.6%</td><td></td><tr><td style='padding-left: 4ex'>uglify</td><td align=right>2,590,560</td><td align=right>25.5%</td><td align=right>662,199</td><td align=right>6.5%</td><td align=right>78,437</td><td align=right>0.8%</td><td align=right class=best>3.1s</td></tr>
+<tr><td><a href='https://github.com/evmar/js-min-bench/tree/master/README.md'>fake-10mb-angular</a></td></tr><tr><td style='padding-left: 4ex'>raw</td><td align=right>10,166,568</td><td align=right></td><td align=right>2,475,364</td><td align=right>24.3%</td><td align=right>267,380</td><td align=right>2.6%</td><td></td><tr><td style='padding-left: 4ex'>uglify</td><td align=right>2,590,560</td><td align=right>25.5%</td><td align=right>662,199</td><td align=right>6.5%</td><td align=right>78,437</td><td align=right>0.8%</td><td align=right class=best>3.1s</td></tr>
 <tr><td style='padding-left: 8ex'>+ compress-mangle</td><td align=right>1,406,099</td><td align=right>13.8%</td><td align=right>480,960</td><td align=right>4.7%</td><td align=right class=best>57,880</td><td align=right class=best>0.6%</td><td align=right>17.6s</td></tr>
 <tr><td style='padding-left: 4ex'>closure</td><td align=right>1,403,414</td><td align=right>13.8%</td><td align=right>487,380</td><td align=right>4.8%</td><td align=right>70,434</td><td align=right>0.7%</td><td align=right>16.7s</td></tr>
 <tr><td style='padding-left: 8ex'>+ advanced</td><td align=right>1,186,319</td><td align=right>11.7%</td><td align=right>468,229</td><td align=right>4.6%</td><td align=right>58,420</td><td align=right>0.6%</td><td align=right>22.4s</td></tr>
 <tr><td style='padding-left: 4ex'>j8t</td><td colspan=6 align=center title='Error: Command failed: ../j8t/target/release/j8t out/fake-10mb-angular.js > out/fake-10mb-angular.j8t'>failed (hover for details)</td><td align=right>0.0s</td></tr>
-<tr><td>react</td></tr><tr><td style='padding-left: 4ex'>raw</td><td align=right>31,124</td><td align=right></td><td align=right>8,926</td><td align=right>28.7%</td><td align=right>8,484</td><td align=right>27.3%</td><td></td><tr><td style='padding-left: 4ex'>uglify</td><td align=right>13,306</td><td align=right>42.8%</td><td align=right>3,796</td><td align=right>12.2%</td><td align=right>3,637</td><td align=right>11.7%</td><td align=right class=best>0.3s</td></tr>
+<tr><td><a href='https://github.com/evmar/js-min-bench/tree/master/third_party/react/README.md'>react</a></td></tr><tr><td style='padding-left: 4ex'>raw</td><td align=right>31,124</td><td align=right></td><td align=right>8,926</td><td align=right>28.7%</td><td align=right>8,484</td><td align=right>27.3%</td><td></td><tr><td style='padding-left: 4ex'>uglify</td><td align=right>13,306</td><td align=right>42.8%</td><td align=right>3,796</td><td align=right>12.2%</td><td align=right>3,637</td><td align=right>11.7%</td><td align=right class=best>0.3s</td></tr>
 <tr><td style='padding-left: 8ex'>+ compress-mangle</td><td align=right>6,528</td><td align=right>21.0%</td><td align=right>2,760</td><td align=right>8.9%</td><td align=right>2,600</td><td align=right>8.4%</td><td align=right>0.5s</td></tr>
 <tr><td style='padding-left: 4ex'>closure</td><td align=right>6,500</td><td align=right>20.9%</td><td align=right>2,789</td><td align=right>9.0%</td><td align=right>2,639</td><td align=right>8.5%</td><td align=right>0.8s</td></tr>
 <tr><td style='padding-left: 8ex'>+ advanced</td><td align=right>5,357</td><td align=right>17.2%</td><td align=right>2,438</td><td align=right>7.8%</td><td align=right class=best>2,280</td><td align=right class=best>7.3%</td><td align=right>0.9s</td></tr>
 <tr><td style='padding-left: 4ex'>j8t</td><td colspan=6 align=center title='Error: Command failed: ../j8t/target/release/j8t third_party/react/react.production.min.js > out/react.j8t'>failed (hover for details)</td><td align=right>0.0s</td></tr>
-<tr><td>react-dom</td></tr><tr><td style='padding-left: 4ex'>raw</td><td align=right>427,605</td><td align=right></td><td align=right>100,800</td><td align=right>23.6%</td><td align=right>90,169</td><td align=right>21.1%</td><td></td><tr><td style='padding-left: 4ex'>uglify</td><td align=right>221,563</td><td align=right>51.8%</td><td align=right>45,487</td><td align=right>10.6%</td><td align=right>42,154</td><td align=right>9.9%</td><td align=right class=best>0.6s</td></tr>
+<tr><td><a href='https://github.com/evmar/js-min-bench/tree/master/third_party/react/README.md'>react-dom</a></td></tr><tr><td style='padding-left: 4ex'>raw</td><td align=right>427,605</td><td align=right></td><td align=right>100,800</td><td align=right>23.6%</td><td align=right>90,169</td><td align=right>21.1%</td><td></td><tr><td style='padding-left: 4ex'>uglify</td><td align=right>221,563</td><td align=right>51.8%</td><td align=right>45,487</td><td align=right>10.6%</td><td align=right>42,154</td><td align=right>9.9%</td><td align=right class=best>0.6s</td></tr>
 <tr><td style='padding-left: 8ex'>+ compress-mangle</td><td align=right>103,156</td><td align=right>24.1%</td><td align=right>33,086</td><td align=right>7.7%</td><td align=right>30,922</td><td align=right>7.2%</td><td align=right>3.1s</td></tr>
 <tr><td style='padding-left: 4ex'>closure</td><td align=right>93,694</td><td align=right>21.9%</td><td align=right>30,661</td><td align=right>7.2%</td><td align=right>28,774</td><td align=right>6.7%</td><td align=right>2.9s</td></tr>
 <tr><td style='padding-left: 8ex'>+ advanced</td><td align=right>74,720</td><td align=right>17.5%</td><td align=right>27,145</td><td align=right>6.3%</td><td align=right class=best>26,355</td><td align=right class=best>6.2%</td><td align=right>2.7s</td></tr>
 <tr><td style='padding-left: 4ex'>j8t</td><td colspan=6 align=center title='Error: Command failed: ../j8t/target/release/j8t third_party/react/react-dom.production.min.js > out/react-dom.j8t'>failed (hover for details)</td><td align=right>0.0s</td></tr>
-<tr><td>todomvc-react</td></tr><tr><td style='padding-left: 4ex'>raw</td><td align=right>703,818</td><td align=right></td><td align=right>159,415</td><td align=right>22.7%</td><td align=right>137,286</td><td align=right>19.5%</td><td></td><tr><td style='padding-left: 4ex'>uglify</td><td align=right>342,022</td><td align=right>48.6%</td><td align=right>77,768</td><td align=right>11.0%</td><td align=right>69,724</td><td align=right>9.9%</td><td align=right class=best>0.6s</td></tr>
+<tr><td><a href='https://github.com/evmar/js-min-bench/tree/master/third_party/todomvc/README.md'>todomvc-react</a></td></tr><tr><td style='padding-left: 4ex'>raw</td><td align=right>703,818</td><td align=right></td><td align=right>159,415</td><td align=right>22.7%</td><td align=right>137,286</td><td align=right>19.5%</td><td></td><tr><td style='padding-left: 4ex'>uglify</td><td align=right>342,022</td><td align=right>48.6%</td><td align=right>77,768</td><td align=right>11.0%</td><td align=right>69,724</td><td align=right>9.9%</td><td align=right class=best>0.6s</td></tr>
 <tr><td style='padding-left: 8ex'>+ compress-mangle</td><td align=right>193,928</td><td align=right>27.6%</td><td align=right>58,471</td><td align=right>8.3%</td><td align=right>53,537</td><td align=right>7.6%</td><td align=right>2.9s</td></tr>
 <tr><td style='padding-left: 4ex'>closure</td><td align=right>189,917</td><td align=right>27.0%</td><td align=right>58,898</td><td align=right>8.4%</td><td align=right>54,176</td><td align=right>7.7%</td><td align=right>2.1s</td></tr>
 <tr><td style='padding-left: 8ex'>+ advanced</td><td align=right>148,007</td><td align=right>21.0%</td><td align=right>54,470</td><td align=right>7.7%</td><td align=right class=best>51,005</td><td align=right class=best>7.2%</td><td align=right>3.3s</td></tr>
 <tr><td style='padding-left: 4ex'>j8t</td><td colspan=6 align=center title='Error: Command failed: ../j8t/target/release/j8t third_party/todomvc/react/bundle.js > out/todomvc-react.j8t'>failed (hover for details)</td><td align=right>0.0s</td></tr>
-<tr><td>todomvc-vanillajs</td></tr><tr><td style='padding-left: 4ex'>raw</td><td align=right>31,613</td><td align=right></td><td align=right>9,049</td><td align=right>28.6%</td><td align=right>8,552</td><td align=right>27.1%</td><td></td><tr><td style='padding-left: 4ex'>uglify</td><td align=right>18,358</td><td align=right>58.1%</td><td align=right>5,262</td><td align=right>16.6%</td><td align=right>4,940</td><td align=right>15.6%</td><td align=right class=best>0.2s</td></tr>
+<tr><td><a href='https://github.com/evmar/js-min-bench/tree/master/third_party/todomvc/README.md'>todomvc-vanillajs</a></td></tr><tr><td style='padding-left: 4ex'>raw</td><td align=right>31,613</td><td align=right></td><td align=right>9,049</td><td align=right>28.6%</td><td align=right>8,552</td><td align=right>27.1%</td><td></td><tr><td style='padding-left: 4ex'>uglify</td><td align=right>18,358</td><td align=right>58.1%</td><td align=right>5,262</td><td align=right>16.6%</td><td align=right>4,940</td><td align=right>15.6%</td><td align=right class=best>0.2s</td></tr>
 <tr><td style='padding-left: 8ex'>+ compress-mangle</td><td align=right>13,805</td><td align=right>43.7%</td><td align=right>4,499</td><td align=right>14.2%</td><td align=right>4,185</td><td align=right>13.2%</td><td align=right>0.6s</td></tr>
 <tr><td style='padding-left: 4ex'>closure</td><td align=right>13,682</td><td align=right>43.3%</td><td align=right>4,543</td><td align=right>14.4%</td><td align=right>4,245</td><td align=right>13.4%</td><td align=right>0.6s</td></tr>
 <tr><td style='padding-left: 8ex'>+ advanced</td><td align=right>11,826</td><td align=right>37.4%</td><td align=right>4,273</td><td align=right>13.5%</td><td align=right class=best>3,993</td><td align=right class=best>12.6%</td><td align=right>1.1s</td></tr>
 <tr><td style='padding-left: 4ex'>j8t</td><td colspan=6 align=center title='Error: Command failed: ../j8t/target/release/j8t third_party/todomvc/vanillajs/bundle.js > out/todomvc-vanillajs.j8t'>failed (hover for details)</td><td align=right>0.0s</td></tr>
-<tr><td>vue</td></tr><tr><td style='padding-left: 4ex'>raw</td><td align=right>280,472</td><td align=right></td><td align=right>76,233</td><td align=right>27.2%</td><td align=right>70,023</td><td align=right>25.0%</td><td></td><tr><td style='padding-left: 4ex'>uglify</td><td align=right>173,165</td><td align=right>61.7%</td><td align=right>49,296</td><td align=right>17.6%</td><td align=right>46,475</td><td align=right>16.6%</td><td align=right class=best>0.4s</td></tr>
+<tr><td><a href='https://github.com/evmar/js-min-bench/tree/master/third_party/vue/README.md'>vue</a></td></tr><tr><td style='padding-left: 4ex'>raw</td><td align=right>280,472</td><td align=right></td><td align=right>76,233</td><td align=right>27.2%</td><td align=right>70,023</td><td align=right>25.0%</td><td></td><tr><td style='padding-left: 4ex'>uglify</td><td align=right>173,165</td><td align=right>61.7%</td><td align=right>49,296</td><td align=right>17.6%</td><td align=right>46,475</td><td align=right>16.6%</td><td align=right class=best>0.4s</td></tr>
 <tr><td style='padding-left: 8ex'>+ compress-mangle</td><td align=right>103,769</td><td align=right>37.0%</td><td align=right>38,202</td><td align=right>13.6%</td><td align=right>36,275</td><td align=right>12.9%</td><td align=right>2.1s</td></tr>
 <tr><td style='padding-left: 4ex'>closure</td><td align=right>102,601</td><td align=right>36.6%</td><td align=right>38,565</td><td align=right>13.8%</td><td align=right>36,663</td><td align=right>13.1%</td><td align=right>1.7s</td></tr>
 <tr><td style='padding-left: 8ex'>+ advanced</td><td align=right>91,591</td><td align=right>32.7%</td><td align=right>37,235</td><td align=right>13.3%</td><td align=right class=best>35,569</td><td align=right class=best>12.7%</td><td align=right>2.3s</td></tr>
 <tr><td style='padding-left: 4ex'>j8t</td><td colspan=6 align=center title='Error: Command failed: ../j8t/target/release/j8t third_party/vue/vue.js > out/vue.j8t'>failed (hover for details)</td><td align=right>0.0s</td></tr>
 </table>
 
-
-  <h2>input details</h2>
-  <dl><dt>angular-hello</dt><dd>angular5 + cli hello world (note: <a href="https://github.com/angular/closure-demo">closure-optimized build</a> is much smaller); <a href='third_party/angular/README.md'>read more</a></dd><dt>angularjs</dt><dd>angularjs 1.6.6 minified bundle</dd><dt>fake-10mb-angular</dt><dd>angularjs 1.6.6 minified, artificially repeated until input file >10mb</dd><dt>react</dt><dd>react production bundle; <a href='third_party/react/README.md'>read more</a></dd><dt>react-dom</dt><dd>react-dom production bundle; <a href='third_party/react/README.md'>read more</a></dd><dt>todomvc-react</dt><dd>todomvc react</dd><dt>todomvc-vanillajs</dt><dd>todomvc vanillajs</dd><dt>vue</dt><dd>vue.js 2.5.3</dd></dl>
-
+  </section>
 
   <h2>tool details</h2>
   <dl><dt>raw</dt><dd>raw input file, as baseline for comparison</dd><dt>uglify</dt><dd>uglifyjs 3.2.2<br><tt>$ node_modules/.bin/uglifyjs %%in%% -o %%out%%</tt><br><dl><dt>compress-mangle</dt><dd><tt>$ node_modules/.bin/uglifyjs %%in%% -o %%out%% --compress --mangle</tt></dd>
@@ -113,20 +128,18 @@
 
   <h2>output details</h2>
   <dl>
-    <dt>gzip</dt>
+    <dt><a name='gzip'>gzip</a></dt>
     <dd>gzip -9 size in bytes, supported by ~all browsers</dd>
 
-    <dt>
-      <a name='brotli'>brotli</dt>
+    <dt><a name='brotli'>brotli</a></dt>
     <dd>
       <a href='https://github.com/google/brotli'>brotli</a> -9 size in bytes, supported by
       <a href='https://caniuse.com/#feat=brotli'>many</a> browsers
     </dd>
 
-    <dt>runtime</dt>
+    <dt><a name='runtime'>runtime</a></dt>
     <dd>time taken to generate output, in seconds, not including compression</dd>
   </dl>
 </body>
 
 </html>
-

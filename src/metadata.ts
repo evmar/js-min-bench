@@ -37,8 +37,10 @@ export interface Test {
   test: string;
 }
 export interface JSFileMetadata {
-  path: string;
+  bundlePath: string;
   desc: string;
+  /** Path to project README; defaults to README.md alongside bundle. */
+  readme?: string;
   version?: string;
   transform?: string;
   externs?: string;
@@ -46,49 +48,51 @@ export interface JSFileMetadata {
 }
 export const js: {[name: string]: JSFileMetadata} = {
   angularjs: {
-    path: 'third_party/angularjs/angular.js',
+    bundlePath: 'third_party/angularjs/angular.js',
     desc: 'angularjs 1.6.6 minified bundle',
     version: '1.6.6'
   },
   'fake-10mb-angular': {
     transform: 'angularjs 10x',
-    path: 'fake-10mb-angular.js',
+    bundlePath: 'fake-10mb-angular.js',
     desc:
       'angularjs 1.6.6 minified, artificially repeated until input file >10mb',
     version: '1.6.6'
   },
   'angular-hello': {
-    path: 'third_party/angular/main.js',
+    bundlePath: 'third_party/angular/main.js',
     desc:
       'angular5 + cli hello world ' +
       '(note: <a href="https://github.com/angular/closure-demo">closure-optimized build</a> is much smaller)'
   },
   react: {
-    path: 'third_party/react/react.production.min.js',
+    bundlePath: 'third_party/react/react.production.min.js',
     desc: 'react production bundle'
   },
   'react-dom': {
-    path: 'third_party/react/react-dom.production.min.js',
+    bundlePath: 'third_party/react/react-dom.production.min.js',
     desc: 'react-dom production bundle'
   },
   vue: {
-    path: 'third_party/vue/vue.js',
+    bundlePath: 'third_party/vue/vue.js',
     desc: 'vue.js 2.5.3',
     version: '2.5.3'
   },
   'todomvc-vanillajs': {
-    path: 'third_party/todomvc/vanillajs/bundle.js',
+    bundlePath: 'third_party/todomvc/vanillajs/bundle.js',
     externs: 'third_party/todomvc/vanillajs/externs.js',
     desc: 'todomvc vanillajs',
+    readme: 'third_party/todomvc/README.md',
     test: {
       webroot: 'third_party/todomvc/vanillajs',
       test: 'build/third_party/todomvc/test.js'
     }
   },
   'todomvc-react': {
-    path: 'third_party/todomvc/react/bundle.js',
+    bundlePath: 'third_party/todomvc/react/bundle.js',
     externs: 'third_party/todomvc/react/externs.js',
     desc: 'todomvc react',
+    readme: 'third_party/todomvc/README.md',
     test: {
       webroot: 'third_party/todomvc/react',
       test: 'build/third_party/todomvc/test.js'

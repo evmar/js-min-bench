@@ -52,9 +52,18 @@ function sizeCells(size: number, bestSize: number, worstSize: number): string {
 
 function resultsTable(allResults: Result[]): string {
   let html = `<table>`;
-  html += `<tr><th>input+tool+variant</th><th>size</th><th></th><th>gzip</th><th></th><th>brotli</th><th></th><th>runtime</th></tr>\n`;
+  html +=
+    `<tr><th>input+tool+variant</th><th>size</th><th></th>` +
+    `<th><a href='#gzip'>gzip</a></th><th></th>` +
+    `<th><a href='#brotli'>brotli</a></th><th></th>` +
+    `<th><a href='#runtime'>runtime</a></th></tr>\n`;
   for (const [input, results] of rollup(allResults, 'input').entries()) {
-    html += `<tr><td>${input}</td></tr>`;
+    const meta = metadata.js[input];
+    const readmePath =
+      meta.readme || path.join(path.dirname(meta.bundlePath), 'README.md');
+    const readmeUrl = `https://github.com/evmar/js-min-bench/tree/master/${readmePath}`;
+
+    html += `<tr><td><a href='${readmeUrl}'>${input}</a></td></tr>`;
     const candidates = results.filter(r => !r.failure);
     const sizes = ([] as number[]).concat(
       ...candidates.map(c => [c.size, c.gzSize, c.brSize])
@@ -97,25 +106,6 @@ function resultsTable(allResults: Result[]): string {
   return html;
 }
 
-function inputDetails(): string {
-  let html = '<dl>';
-  const inputs = Object.keys(metadata.js);
-  inputs.sort();
-  for (const name of inputs) {
-    const meta = metadata.js[name];
-    let desc = meta.desc;
-    if (meta.path.match(/^third_party/)) {
-      const readmePath = path.join(path.dirname(meta.path), 'README.md');
-      if (fs.existsSync(readmePath)) {
-        desc += `; <a href='${readmePath}'>read more</a>`;
-      }
-    }
-    html += `<dt>${name}</dt>` + `<dd>${desc}</dd>`;
-  }
-  html += '</dl>\n';
-  return html;
-}
-
 /** Redacts "/home/username/.../ bit from a command line. */
 function redactCommand(cmd: string): string {
   return cmd.replace(/^.*\/js-min-bench\//, '');
@@ -153,7 +143,6 @@ function main() {
   const template = fs.readFileSync('src/results.template', 'utf8');
   const templateData: {[k: string]: string} = {
     resultsTable: resultsTable(allResults),
-    inputDetails: inputDetails(),
     toolDetails: toolDetails()
   };
   console.log(template.replace(/%%(\w+)%%/g, (_, f) => templateData[f]));

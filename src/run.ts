@@ -52,7 +52,7 @@ function brotli(path: string): number {
 }
 
 function gen10xAngular(path: string): string {
-  const ngPath = metadata.js['angularjs'].path;
+  const ngPath = metadata.js['angularjs'].bundlePath;
   const ngJS = fs.readFileSync(ngPath, 'utf-8');
   let data = ngJS;
   while (data.length < 10 * 1000 * 1000) {
@@ -68,7 +68,10 @@ function gen10xAngular(path: string): string {
  * Runs a test suite with a JS bundle substituted in.
  * @return a failure message if failed, undefined on success.
  */
-async function runTests(test: metadata.Test, bundlePath: string): Promise<string|undefined> {
+async function runTests(
+  test: metadata.Test,
+  bundlePath: string
+): Promise<string | undefined> {
   const server = new WebServer(test.webroot);
   const port = 9000;
   server.remaps.set('/bundle.js', bundlePath);
@@ -120,8 +123,8 @@ async function main() {
   let results: Result[] = [];
   for (const input of inputs) {
     if (inputFilter && !inputFilter.test(input)) continue;
-    const {path, transform, test, externs} = metadata.js[input];
-    let inputPath = path;
+    const {bundlePath, transform, test, externs} = metadata.js[input];
+    let inputPath = bundlePath;
     if (transform) {
       if (transform === 'angularjs 10x') {
         inputPath = gen10xAngular(inputPath);

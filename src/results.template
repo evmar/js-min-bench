@@ -10,6 +10,10 @@
       margin: auto;
     }
 
+    p {
+      max-width: 80ex;
+    }
+
     h1,
     h2 {
       font-weight: normal;
@@ -17,6 +21,12 @@
 
     tt {
       font-family: monospace, WebKitWorkaround;
+    }
+
+    .note {
+      background: #fee;
+      border: solid 1px #fcc;
+      padding: 1ex 1.5ex;
     }
 
     table {
@@ -35,6 +45,11 @@
     .best {
       background: #dfd;
     }
+
+    #results a {
+      color: inherit;
+      text-decoration: inherit;
+    }
   </style>
 </head>
 
@@ -42,9 +57,11 @@
   <h1>js-min-bench minifier comparison</h1>
   <p>
     This page compares JavaScript minifiers across various settings and for various
-    inputs. Note that the input programs are not comparable against one another
-    because they do wildly different things -- e.g. don't compare "angularjs"
-    vs "react" -- but rather for a given input program compare the different
+    inputs.
+  </p>
+  <p class='note'>Note: the input programs are not comparable against one another
+    because they do wildly different things. So don't compare "angularjs"
+    vs "react", but rather for a given input program compare the different
     minifiers (uglify vs closure etc.).
   </p>
   <p>
@@ -53,28 +70,26 @@
     details about what these numbers are.
   </p>
 
-  <h2>test results</h2>
-  %%resultsTable%%
-
-  <h2>input details</h2>
-  %%inputDetails%%
+  <section id='results'>
+    <h2><a class='stealth' href='#results' name='results'>test results</a></h2>
+    %%resultsTable%%
+  </section>
 
   <h2>tool details</h2>
   %%toolDetails%%
 
   <h2>output details</h2>
   <dl>
-    <dt>gzip</dt>
+    <dt><a name='gzip'>gzip</a></dt>
     <dd>gzip -9 size in bytes, supported by ~all browsers</dd>
 
-    <dt>
-      <a name='brotli'>brotli</dt>
+    <dt><a name='brotli'>brotli</a></dt>
     <dd>
       <a href='https://github.com/google/brotli'>brotli</a> -9 size in bytes, supported by
       <a href='https://caniuse.com/#feat=brotli'>many</a> browsers
     </dd>
 
-    <dt>runtime</dt>
+    <dt><a name='runtime'>runtime</a></dt>
     <dd>time taken to generate output, in seconds, not including compression</dd>
   </dl>
 </body>
