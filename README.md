@@ -14,7 +14,6 @@ Note: This is not an officially supported Google product.
 You need:
 
 * nodejs (to run the benchmarker and uglify)
-* Java (to run the Closure compiler)
 * yarn (to download more dependencies): `npm i -g yarn`
 * [brotli](https://github.com/google/brotli) (a recent version)
 
