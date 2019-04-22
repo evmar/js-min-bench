@@ -33,23 +33,22 @@ declare global {
   }
 }
 
+/** Synchronously executes a subcommand. */
 function exec(cmd: string) {
   childProcess.execSync(cmd, {stdio: 'inherit'});
 }
 
+/** gzips a bundle and returns the gzipped size. */
 function gzip(path: string): number {
   exec(`gzip -k -9 -f ${path}`);
   return fs.statSync(`${path}.gz`).size;
 }
 
+/** brotli compresses a bundle and returns the compressed file size. */
 function brotli(path: string): number {
   const brotli = process.env['BROTLI'] || 'brotli';
   exec(`${brotli} -k -9 -f ${path}`);
   return fs.statSync(`${path}.br`).size;
-}
-
-function summarize(results: Result[]) {
-  fs.writeFileSync('out/results.json', JSON.stringify(results));
 }
 
 function gen10xAngular(path: string): string {
@@ -65,6 +64,10 @@ function gen10xAngular(path: string): string {
   return outPath;
 }
 
+/**
+ * Runs a test suite with a JS bundle substituted in.
+ * @return a failure message if failed, undefined on success.
+ */
 async function runTests(test: metadata.Test, bundlePath: string): Promise<string|undefined> {
   const server = new WebServer(test.webroot);
   const port = 9000;
@@ -180,7 +183,7 @@ async function main() {
     }
   }
 
-  summarize(results);
+  fs.writeFileSync('out/results.json', JSON.stringify(results));
 }
 
 main().catch(err => {
