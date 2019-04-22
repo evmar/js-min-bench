@@ -117,7 +117,7 @@ export const tools: ToolMetadata[] = [
   },
   {
     id: 'uglify',
-    name: 'uglifyjs 3.2.2',
+    name: 'uglifyjs 3.5.6',
     variants: [
       {command: 'node_modules/.bin/uglifyjs %%in%% -o %%out%%'},
       {
@@ -125,6 +125,19 @@ export const tools: ToolMetadata[] = [
         desc: '<tt>--compress</tt> and <tt>--mangle</tt> flags',
         command:
           'node_modules/.bin/uglifyjs %%in%% -o %%out%% --compress --mangle'
+      }
+    ]
+  },
+  {
+    id: 'terser',
+    name: 'terser 3.17.0',
+    variants: [
+      {command: 'node_modules/.bin/terser %%in%% -o %%out%%'},
+      {
+        id: 'compress-mangle',
+        desc: '<tt>--compress</tt> and <tt>--mangle</tt> flags',
+        command:
+          'node_modules/.bin/terser %%in%% -o %%out%% --compress --mangle'
       }
     ]
   },
