@@ -77,7 +77,9 @@ function resultsTable(allResults: Result[]): string {
     for (const result of results) {
       html += `<tr>`;
       if (result.tool != lastTool) {
-        html += `<td style='padding-left: 4ex'>${result.tool}</td>`;
+        html +=
+          `<td style='padding-left: 4ex'>` +
+          `<a href='#${result.tool}'>${result.tool}</a></td>`;
         lastTool = result.tool;
       } else {
         html += `<td style='padding-left: 8ex'>+ ${result.variant}</td>`;
@@ -117,7 +119,7 @@ function toolDetails(): string {
     `<dt>raw</dt>` + `<dd>raw input file, as baseline for comparison</dd>`;
   for (const tool of metadata.tools.slice(1)) {
     html +=
-      `<dt>${tool.id}</dt>` +
+      `<dt><a name='${tool.id}'>${tool.id}</a></dt>` +
       `<dd>${tool.name}<br>` +
       `<tt>$ ${redactCommand(tool.variants[0].command)}</tt><br>`;
     if (tool.variants.length > 1) {
