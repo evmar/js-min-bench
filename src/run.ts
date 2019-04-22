@@ -37,13 +37,15 @@ function exec(cmd: string) {
   childProcess.execSync(cmd, {stdio: 'inherit'});
 }
 
-function gzip(path: string) {
+function gzip(path: string): number {
   exec(`gzip -k -9 -f ${path}`);
+  return fs.statSync(`${path}.gz`).size;
 }
 
-function brotli(path: string) {
+function brotli(path: string): number {
   const brotli = process.env['BROTLI'] || 'brotli';
   exec(`${brotli} -k -9 -f ${path}`);
+  return fs.statSync(`${path}.br`).size;
 }
 
 function summarize(results: Result[]) {
@@ -61,6 +63,29 @@ function gen10xAngular(path: string): string {
   const outPath = `out/${path}`;
   fs.writeFileSync(outPath, data);
   return outPath;
+}
+
+async function runTests(test: metadata.Test, bundlePath: string): Promise<string|undefined> {
+  const server = new WebServer(test.webroot);
+  const port = 9000;
+  server.remaps.set('/bundle.js', bundlePath);
+  await server.run(port);
+
+  const mocha = new Mocha();
+  mocha.addFile(test.test);
+  mocha.reporter('progress');
+  const failures = await new Promise(resolve => {
+    mocha.run(failures => {
+      resolve(failures);
+    });
+  });
+  mocha.unloadFiles();
+  await server.stop();
+
+  if (failures > 0) {
+    console.warn(`run test manually via\n$ ${server.cmdline()}`);
+    return 'test failure';
+  }
 }
 
 async function main() {
@@ -135,25 +160,10 @@ async function main() {
         result.time = Date.now() - start;
 
         if (commander.tests && test) {
-          const server = new WebServer(test.webroot);
-          const port = 9000;
-          server.remaps.set('/bundle.js', out);
-          await server.run(port);
-
-          const mocha = new Mocha();
-          mocha.addFile(test.test);
-          mocha.reporter('progress');
-          const failures = await new Promise(resolve => {
-            mocha.run(failures => {
-              resolve(failures);
-            });
-          });
-          mocha.unloadFiles();
-          await server.stop();
-          if (failures > 0) {
-            result.failure = 'test failure';
+          const failureMsg = await runTests(test, out);
+          if (failureMsg) {
+            result.failure = failureMsg;
             results.push(result);
-            console.warn(`run test manually via\n$ ${server.cmdline()}`);
             continue;
           }
         } else {
@@ -162,10 +172,8 @@ async function main() {
         }
 
         result.size = fs.statSync(out).size;
-        gzip(out);
-        result.gzSize = fs.statSync(`${out}.gz`).size;
-        brotli(out);
-        result.brSize = fs.statSync(`${out}.br`).size;
+        result.gzSize = gzip(out);
+        result.brSize = brotli(out);
 
         results.push(result);
       }

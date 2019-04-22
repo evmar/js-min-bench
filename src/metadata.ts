@@ -32,16 +32,17 @@ const closureCommand = [
   '--language_out=ECMASCRIPT_2015'
 ].join(' ');
 
+export interface Test {
+  webroot: string;
+  test: string;
+}
 export interface JSFileMetadata {
   path: string;
   desc: string;
   version?: string;
   transform?: string;
   externs?: string;
-  test?: {
-    webroot: string;
-    test: string;
-  };
+  test?: Test;
 }
 export const js: {[name: string]: JSFileMetadata} = {
   angularjs: {
