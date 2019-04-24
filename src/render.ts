@@ -77,9 +77,12 @@ function resultsTable(allResults: Result[]): string {
     for (const result of results) {
       html += `<tr>`;
       if (result.tool != lastTool) {
+        const untestedMsg = result.untested
+          ? ` <span title="warning: not tested">⚠</span>`
+          : '';
         html +=
           `<td style='padding-left: 4ex'>` +
-          `<a href='#${result.tool}'>${result.tool}</a></td>`;
+          `<a href='#${result.tool}'>${result.tool}</a>${untestedMsg}</td>`;
         lastTool = result.tool;
       } else {
         html += `<td style='padding-left: 8ex'>+ ${result.variant}</td>`;

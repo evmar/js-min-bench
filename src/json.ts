@@ -23,4 +23,5 @@ export interface Result {
   gzSize: number;
   brSize: number;
   failure?: string;
+  untested?: boolean;
 }

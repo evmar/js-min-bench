@@ -173,7 +173,7 @@ async function main() {
             continue;
           }
         } else {
-          // TODO: include this warning in the output.
+          result.untested = true;
           console.warn('warning: no test');
         }
 

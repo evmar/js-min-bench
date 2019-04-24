@@ -24,8 +24,10 @@ minifier doesn't (accidentally) cheat in this manner is by verifying that the
 resulting application still works after minification. For this reason, the input
 programs here should be _applications_, not frameworks or libraries, and for
 each application we need end-to-end tests. The benchmarker then can run the test
-suite for each output. This idea is currently only implemented for the `todomvc`
-results here.
+suite for each output.
+
+Unfortunately, I realized the need for testing too late, so this idea is
+currently only implemented for the `todomvc` results here.
 
 ## Run it yourself
 
