@@ -3,6 +3,8 @@
 This project attempts to create a repeatable benchmark comparing various
 JavaScript minifiers and options.
 
+[Read a longer blog post about what minifiers do and why this benchmark is useful](http://neugierig.org/software/blog/2019/04/js-minifiers.html).
+
 [View the current results](https://evmar.github.io/js-min-bench/).
 
 Note: This is not an officially supported Google product.
